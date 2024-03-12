@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE", "CORE\CORE.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB", "WEB\WEB.csproj", "{6AFD6BEF-1F1E-4D76-A547-B808E3B47804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingGarage.Tests", "ParkingGarage.Tests\ParkingGarage.Tests.csproj", "{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6AFD6BEF-1F1E-4D76-A547-B808E3B47804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AFD6BEF-1F1E-4D76-A547-B808E3B47804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AFD6BEF-1F1E-4D76-A547-B808E3B47804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
