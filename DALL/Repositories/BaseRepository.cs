@@ -33,7 +33,7 @@ namespace DALL.Repositories
             this._context.SaveChanges();
         }
 
-        public void Save(T entity)
+        public void Update(T entity)
         {
             this._dbSet.Update(entity);
             this._context.SaveChanges();
