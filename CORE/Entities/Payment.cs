@@ -14,7 +14,7 @@ namespace CORE.Entities
         [ForeignKey("car_id")]
         public int CarId { get; set; }
 
-        [ForeignKey("parking_garage")]
+        [ForeignKey("parking_garage_id")]
         public int GarageId { get; set; }
 
         [Column("cents")]
