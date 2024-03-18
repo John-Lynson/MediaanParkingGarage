@@ -1,4 +1,5 @@
 #preloader {
+    display: none;
     background-color: #000;
     background-image: url('images/PreloaderIMG.gif');
     background-repeat: no-repeat;
