@@ -1,24 +1,37 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     var preloader = document.getElementById("preloader");
-    var minPreloaderTime = 1500; // Minimale weergavetijd van de preloader in milliseconden (500ms = 0.5 seconde)
-    var startTime = new Date().getTime(); // Tijdstip waarop de pagina begint te laden
 
-    function hidePreloader() {
-        var elapsedTime = new Date().getTime() - startTime; // Hoe lang de pagina al laadt
-        if (elapsedTime < minPreloaderTime) {
-            // Als de pagina te snel laadt, wacht dan tot de minimale weergavetijd is bereikt
-            setTimeout(function () {
-                preloader.style.display = 'none';
-            }, minPreloaderTime - elapsedTime);
+    // Check if navigating within the app
+    if (sessionStorage.getItem('isNavigatingWithinApp')) {
+        // Hide preloader immediately if we're navigating within the app
+        preloader.style.display = 'none';
+    } else {
+        // This is either the first load or a reload
+        if (!sessionStorage.getItem('isPreloaderShown')) {
+            preloader.style.display = 'block';
+            sessionStorage.setItem('isPreloaderShown', 'true');
+
+            var minPreloaderTime = 1500; // Minimale weergavetijd van de preloader in milliseconden
+            var startTime = new Date().getTime(); // Starttijd
+
+            function hidePreloader() {
+                var elapsedTime = new Date().getTime() - startTime;
+                if (elapsedTime < minPreloaderTime) {
+                    setTimeout(function () {
+                        preloader.style.display = 'none';
+                    }, minPreloaderTime - elapsedTime);
+                } else {
+                    preloader.style.display = 'none';
+                }
+            }
+
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 5000); // Maximale weergavetijd als backup
         } else {
-            // Als de minimale weergavetijd al is bereikt of overschreden, verberg de preloader onmiddellijk
             preloader.style.display = 'none';
         }
     }
 
-    window.addEventListener('load', hidePreloader);
-
-    // Optioneel: een maximale tijd instellen voor het geval de pagina extreem langzaam laadt,
-    // kunt u de preloader forceren om te verbergen na bijvoorbeeld 5 seconden.
-    setTimeout(hidePreloader, 5000);
+    // Mark future navigations as within-app navigations
+    sessionStorage.setItem('isNavigatingWithinApp', 'true');
 });
