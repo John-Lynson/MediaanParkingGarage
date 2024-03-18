@@ -15,7 +15,7 @@ namespace ParkingGarage.Tests
     public class RegistrationServiceTests
     {
         [TestMethod]
-        public void CreatePlate_NewCar_ShouldCreateSuccessfully()
+        public void CreateCar_NewCar_ShouldCreateSuccessfully()
         {
             // Arrange
             var mockRepository = new Mock<ICarRepository>();
@@ -24,10 +24,10 @@ namespace ParkingGarage.Tests
             var licensePlate = "ABC123";
 
             // Act
-            service.CreatePlate(accountId, licensePlate);
+            service.CreateCar(accountId, licensePlate);
 
             // Assert
-            mockRepository.Verify(repo => repo.Add(It.IsAny<Car>()), Times.Once);
+            mockRepository.Verify(repo => repo.Create(It.IsAny<Car>()), Times.Once);
         }
 
     }
