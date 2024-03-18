@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace DALL.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class Repository<T> : IBaseRepository<T> where T : Entity
     {
         private GarageContext _context;
         private DbSet<T> _dbSet;
 
-        public BaseRepository(GarageContext context)
+        public Repository(GarageContext context)
         {
             this._context = context;
             this._dbSet = context.Set<T>();

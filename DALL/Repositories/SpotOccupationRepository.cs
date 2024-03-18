@@ -4,7 +4,7 @@ using DALL.Context;
 
 namespace DALL.Repositories
 {
-    public class SpotOccupationRepository : BaseRepository<SpotOccupation>, ISpotOccupationRepository
+    public class SpotOccupationRepository : Repository<SpotOccupation>, ISpotOccupationRepository
     {
         public SpotOccupationRepository(GarageContext context) : base(context) { }
     }

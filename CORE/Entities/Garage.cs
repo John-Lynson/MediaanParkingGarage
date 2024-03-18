@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    public class Garage : BaseEntity
+    public class Garage : Entity
     {
         [Column("name")]
         public string Name { get; set; }

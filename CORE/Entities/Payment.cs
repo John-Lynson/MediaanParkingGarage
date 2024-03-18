@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    public class Payment : BaseEntity
+    public class Payment : Entity
     {
         [ForeignKey("car_id")]
         public int CarId { get; set; }

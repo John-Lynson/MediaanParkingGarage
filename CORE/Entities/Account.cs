@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    public class Account : BaseEntity
+    public class Account : Entity
     {
         [Column("administrator")]
         public bool IsAdmin { get; set; }

@@ -4,7 +4,7 @@ using DALL.Context;
 
 namespace DALL.Repositories
 {
-    public class GarageRepository : BaseRepository<Garage>, IGarageRepository
+    public class GarageRepository : Repository<Garage>, IGarageRepository
     {
         public GarageRepository(GarageContext context) : base(context) { }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    public class BaseEntity
+    public class Entity
     {
         [Key]
         public int Id { get; set; } = 0;

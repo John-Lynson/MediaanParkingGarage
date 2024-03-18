@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    public class SpotOccupation : BaseEntity
+    public class SpotOccupation : Entity
     {
         [ForeignKey("parking_spot_id")]
         public int ParkingSpotId { get; set; }
