@@ -9,6 +9,6 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface ISpotOccupationRepository : IRepository<SpotOccupation>
     {
-
+        public SpotOccupation GetLatestByCarId(int carId);
     }
 }
