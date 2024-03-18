@@ -1,0 +1,29 @@
+* [33mcommit 2473d99e15dfb6fa943466d53eb560ab099a8e2f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mRegisterLicensePlate[m[33m, [m[1;31morigin/RegisterLicensePlate[m[33m)[m
+[31m|[m Author: drm0011 <119403263+drm0011@users.noreply.github.com>
+[31m|[m Date:   Tue Mar 12 12:24:23 2024 +0100
+[31m|[m 
+[31m|[m     register plate service and test
+[31m|[m 
+* [33mcommit ed9b3287d2ea54ba404a29aff21ebcce3683361f[m[33m ([m[1;31morigin/sprint1[m[33m, [m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+[31m|[m Author: Lin <477398@student.fontys.nl>
+[31m|[m Date:   Tue Mar 12 11:39:37 2024 +0100
+[31m|[m 
+[31m|[m     fixed solution not loading in projects
+[31m|[m 
+* [33mcommit 5e3c106cedaf8e5c01118a7c0a3746a8a08e2f8c[m
+[31m|[m Author: Lin <477398@student.fontys.nl>
+[31m|[m Date:   Tue Mar 12 11:27:32 2024 +0100
+[31m|[m 
+[31m|[m     solution changes
+[31m|[m 
+* [33mcommit 5819dc9b73c496508238408e08b0e9eddf43ba15[m
+[31m|[m Author: Johnny Graanoogst <Johnlynson809@gmail.com>
+[31m|[m Date:   Mon Mar 11 20:40:13 2024 +0100
+[31m|[m 
+[31m|[m     Add project files.
+[31m|[m 
+* [33mcommit 8b777cf73c23b898edaf414d6796f619a0bb622d[m
+  Author: Johnny Graanoogst <Johnlynson809@gmail.com>
+  Date:   Mon Mar 11 20:40:09 2024 +0100
+  
+      Add .gitattributes and .gitignore.
