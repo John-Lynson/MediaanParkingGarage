@@ -16,8 +16,11 @@ namespace CORE.Services
         {
             _carRepository = carRepository ?? throw new ArgumentNullException(nameof(carRepository));
         }
-        public void CreatePlate(int accountId, string licensePlate)
+        public void CreateCar(int accountId, string licensePlate)
         {
+            if (accountId <= 0)
+                throw new ArgumentException("Account ID cannot be null.", nameof(accountId));
+
             if (string.IsNullOrEmpty(licensePlate))
                 throw new ArgumentException("License plate cannot be empty.", nameof(licensePlate));
 
@@ -27,7 +30,7 @@ namespace CORE.Services
                 LicensePlate = licensePlate,
             };
 
-            this._carRepository.Add(car);
+            this._carRepository.Create(car);
         }
     }
 }

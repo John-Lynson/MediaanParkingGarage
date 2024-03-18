@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Interfaces.IRepositories
 {
-    public interface ITariffRepository : IBaseRepository<Tariff>
+    public interface ITariffRepository : IRepository<Tariff>
     {
 
     }

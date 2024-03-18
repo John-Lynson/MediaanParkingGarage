@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Interfaces.IRepositories
 {
-    public interface ICarRepository : IBaseRepository<Car>
+    public interface ICarRepository : IRepository<Car>
     {
 
     }

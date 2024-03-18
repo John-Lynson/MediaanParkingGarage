@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Interfaces.IRepositories
 {
-    public interface ISpotOccupationRepository : IBaseRepository<SpotOccupation>
+    public interface ISpotOccupationRepository : IRepository<SpotOccupation>
     {
 
     }

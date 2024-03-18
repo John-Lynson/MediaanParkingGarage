@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Interfaces.IRepositories
 {
-    public interface IParkingSpotRepository : IBaseRepository<ParkingSpot>
+    public interface IParkingSpotRepository : IRepository<ParkingSpot>
     {
 
     }

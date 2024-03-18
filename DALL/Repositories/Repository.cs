@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DALL.Repositories
 {
-    public class Repository<T> : IBaseRepository<T> where T : Entity
+    public class Repository<T> : IRepository<T> where T : Entity
     {
         private GarageContext _context;
         private DbSet<T> _dbSet;
@@ -21,7 +21,7 @@ namespace DALL.Repositories
             this._dbSet = context.Set<T>();
         }
 
-        public void Add(T entity)
+        public void Create(T entity)
         {
             this._dbSet.Add(entity);
             this._context.SaveChanges();

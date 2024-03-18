@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Interfaces.IRepositories
 {
-    public interface IAccountRepository : IBaseRepository<Account>
+    public interface IAccountRepository : IRepository<Account>
     {
 
     }
