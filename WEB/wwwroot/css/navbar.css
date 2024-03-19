@@ -4,6 +4,7 @@
 
 .nav-link {
     color: #333; /* Kleur van de iconen en tekst */
+    font-size: 1.5rem;
 }
 
     .nav-link:hover {
