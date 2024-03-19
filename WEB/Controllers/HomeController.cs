@@ -18,7 +18,7 @@ namespace WEB.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Payment()
         {
             return View();
         }
