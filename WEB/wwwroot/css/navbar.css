@@ -1,14 +1,14 @@
 .navbar.fixed-bottom {
-    background-color: #fff; /* Achtergrondkleur van de navbar */
+    background-color: #05192e !important; /* Achtergrondkleur van de navbar */
 }
 
-.nav-link {
-    color: #333; /* Kleur van de iconen en tekst */
+.navbar .nav-link {
+    color: #F2F619 !important; /* Kleur van de iconen en tekst */
     font-size: 1.5rem;
 }
 
-    .nav-link:hover {
-        color: #007bff; /* Kleur wanneer je over een icoon/text hovert */
+    .navbar .nav-link:hover {
+        color: #007bff !important; /* Kleur wanneer je over een icoon/text hovert */
     }
 
 .nav-text {
