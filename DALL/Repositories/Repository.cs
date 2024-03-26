@@ -12,8 +12,8 @@ namespace DALL.Repositories
 {
     public class Repository<T> : IRepository<T> where T : Entity
     {
-        private GarageContext _context;
-        private DbSet<T> _dbSet;
+        protected GarageContext _context;
+        protected DbSet<T> _dbSet;
 
         public Repository(GarageContext context)
         {
