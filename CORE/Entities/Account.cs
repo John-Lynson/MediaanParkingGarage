@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CORE.Entities
 {
-    internal class Account
+    public class Account : Entity
     {
+        [Column("administrator")]
+        public bool IsAdmin { get; set; }
+
+        [Column("auth0_user_id")]
+        public string Auth0UserId { get; set; }
+
+        [Column("username")]
+        public string Username { get; set; }
     }
 }
