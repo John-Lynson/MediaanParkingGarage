@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.34" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\css\site.css">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

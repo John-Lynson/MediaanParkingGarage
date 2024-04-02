@@ -23,21 +23,16 @@ namespace WEB.Controllers
         {
             return View();
         }
+
+        [Authorize]
         public IActionResult About()
         {
+            ViewData["Title"] = "Profiel";
             return View();
         }
 
         public IActionResult RegisterPlate()
         {
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult About()
-        {
-            ViewData["Title"] = "About";
-            ViewData["Username"] = User.Identity.Name; // Gebruikersnaam toevoegen aan ViewData
             return View();
         }
 

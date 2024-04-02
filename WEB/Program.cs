@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Auth0.AspNetCore.Authentication;
 
 namespace WEB
 {
@@ -9,28 +10,18 @@ namespace WEB
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
-            // Begin Auth0 Configuration
-            builder.Services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddCookie()
-            .AddOpenIdConnect("Auth0", options => {
-                options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
+            // Auth0 configuratie
+            builder.Services.AddAuth0WebAppAuthentication(options =>
+            {
+                options.Domain = builder.Configuration["Auth0:Domain"];
                 options.ClientId = builder.Configuration["Auth0:ClientId"];
-                options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
-                options.ResponseType = "code";
-                options.Scope.Clear();
-                options.Scope.Add("openid");
-                options.CallbackPath = new PathString("/signin-auth0");
-                options.ClaimsIssuer = "Auth0";
-                options.SaveTokens = true;
             });
-            // End Auth0 Configuration
+
+            // Voeg dit toe als je MVC controllers en views gebruikt
+            builder.Services.AddControllersWithViews(); // Belangrijk voor MVC
+
+            // Als je applicatie ook autorisatiebeleid gebruikt
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -38,7 +29,6 @@ namespace WEB
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -47,7 +37,7 @@ namespace WEB
 
             app.UseRouting();
 
-            app.UseAuthentication(); // Make sure to call UseAuthentication before UseAuthorization
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.MapControllerRoute(

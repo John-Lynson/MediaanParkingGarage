@@ -1,26 +1,27 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Policy;
 
-namespace WEB.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    public async Task Login(string returnUrl = "/")
     {
-        public IActionResult Login(string returnUrl = "/")
-        {
-            return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, "Auth0");
-        }
+        var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+            .WithRedirectUri(returnUrl)
+            .Build();
 
-        [Authorize]
-        public async Task Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignOutAsync("Auth0", new AuthenticationProperties
-            {
-                RedirectUri = Url.Action("Index", "Home")
-            });
-        }
+        await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+    }
+
+    public async Task Logout()
+    {
+        var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+            .WithRedirectUri(Url.Action("Index", "Home"))
+            .Build();
+
+        await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 }
