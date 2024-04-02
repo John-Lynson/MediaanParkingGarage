@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WEB.Models;
@@ -20,6 +21,14 @@ namespace WEB.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Title"] = "About";
+            ViewData["Username"] = User.Identity.Name; // Gebruikersnaam toevoegen aan ViewData
             return View();
         }
 
