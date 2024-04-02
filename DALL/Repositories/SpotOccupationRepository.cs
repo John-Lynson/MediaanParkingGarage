@@ -7,5 +7,20 @@ namespace DALL.Repositories
     public class SpotOccupationRepository : Repository<SpotOccupation>, ISpotOccupationRepository
     {
         public SpotOccupationRepository(GarageContext context) : base(context) { }
+
+        public List<int> GetAvailableSpaces(List<int> parkingSpotIds, DateTime expectedStartDate, DateTime expectedEndDate)
+        {
+            var occupiedSpots = this._dbSet
+                .Where(so => parkingSpotIds.Contains(so.ParkingSpotId)
+                        && ((so.ExpectedStartDate < expectedEndDate && so.ExpectedEndDate > expectedStartDate)
+                        || (so.ActualStartDate < expectedEndDate && so.ActualEndDate > expectedStartDate)))
+                .Select(so => so.ParkingSpotId)
+                .Distinct()
+                .ToList();
+
+            var availableSpots = parkingSpotIds.Except(occupiedSpots).ToList();
+            return availableSpots;
+
+        }
     }
 }
