@@ -19,7 +19,16 @@ namespace WEB.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Payment()
+        {
+            return View();
+        }
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult RegisterPlate()
         {
             return View();
         }
