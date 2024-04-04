@@ -1,0 +1,44 @@
+.license-plate-form {
+    margin-top: 20px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .license-plate-form h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .license-plate-form p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .license-plate-form form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .license-plate-form input[type="text"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .license-plate-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+        .license-plate-form button:hover {
+            background-color: #0056b3;
+        }

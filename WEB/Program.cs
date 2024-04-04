@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Auth0.AspNetCore.Authentication;
+
 namespace WEB
 {
     public class Program
@@ -6,8 +10,18 @@ namespace WEB
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            // Auth0 configuratie
+            builder.Services.AddAuth0WebAppAuthentication(options =>
+            {
+                options.Domain = builder.Configuration["Auth0:Domain"];
+                options.ClientId = builder.Configuration["Auth0:ClientId"];
+            });
+
+            // Voeg dit toe als je MVC controllers en views gebruikt
+            builder.Services.AddControllersWithViews(); // Belangrijk voor MVC
+
+            // Als je applicatie ook autorisatiebeleid gebruikt
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -15,7 +29,6 @@ namespace WEB
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -24,6 +37,7 @@ namespace WEB
 
             app.UseRouting();
 
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
             app.MapControllerRoute(

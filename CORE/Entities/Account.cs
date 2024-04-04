@@ -13,6 +13,9 @@ namespace CORE.Entities
         [Column("administrator")]
         public bool IsAdmin { get; set; }
 
+        [Column("auth0_user_id")]
+        public string Auth0UserId { get; set; }
+
         [Column("username")]
         public string Username { get; set; }
 

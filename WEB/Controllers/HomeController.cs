@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WEB.Models;
@@ -18,7 +19,19 @@ namespace WEB.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Payment()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Title"] = "Profiel";
+            return View();
+        }
+
+        public IActionResult RegisterPlate()
         {
             return View();
         }

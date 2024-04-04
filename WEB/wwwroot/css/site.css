@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Lato";
+    src: url('698242188-Lato-Bla.eot');
+    src: url('698242188-Lato-Bla.eot?#iefix') format('embedded-opentype'), url('698242188-Lato-Bla.svg#Lato Black') format('svg'), url('698242188-Lato-Bla.woff') format('woff'), url('698242188-Lato-Bla.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
   font-size: 14px;
 }
@@ -17,6 +25,15 @@ html {
   min-height: 100%;
 }
 
+.profile-photo {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
 body {
-  margin-bottom: 60px;
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 60px;
+    background-color: #FFFFFF; /* Zwart */
 }
