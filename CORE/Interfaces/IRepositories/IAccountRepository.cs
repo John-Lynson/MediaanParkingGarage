@@ -9,6 +9,6 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface IAccountRepository : IRepository<Account>
     {
-
+        public Account GetAccountByAuth0Id(string auth0Id);
     }
 }
