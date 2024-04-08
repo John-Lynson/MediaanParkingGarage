@@ -1,6 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Auth0.AspNetCore.Authentication;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
+using DALL.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 
 namespace WEB
 {
@@ -23,6 +28,12 @@ namespace WEB
             // Als je applicatie ook autorisatiebeleid gebruikt
             builder.Services.AddAuthorization();
 
+            // Database initialization
+            SqlConnectionStringBuilder conBuilder = new SqlConnectionStringBuilder();
+
+            builder.Services.AddDbContext<GarageContext>(options => options.UseSqlServer("Data Source=10.0.3.10;Database=mediaan_parking_garage;User ID=SA;Password=Software01!;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False"));
+
+            // Build
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,7 +48,7 @@ namespace WEB
 
             app.UseRouting();
 
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

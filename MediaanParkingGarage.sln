@@ -11,8 +11,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE", "CORE\CORE.csproj", "{D607B183-053F-4B1A-B70E-B1AF8A952710}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB", "WEB\WEB.csproj", "{6AFD6BEF-1F1E-4D76-A547-B808E3B47804}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E45C2BC-CB92-4E26-8D4C-19DFD0F7DF48} = {5E45C2BC-CB92-4E26-8D4C-19DFD0F7DF48}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingGarage.Tests", "ParkingGarage.Tests\ParkingGarage.Tests.csproj", "{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingGarage.Tests", "ParkingGarage.Tests\ParkingGarage.Tests.csproj", "{8CD979B1-9791-4C4B-8B85-0E1B6303E47A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

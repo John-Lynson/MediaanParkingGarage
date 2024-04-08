@@ -11,10 +11,10 @@ namespace CORE.Entities
 {
     public class Payment : Entity
     {
-        [ForeignKey("car_id")]
+        [Column("car_id")]
         public int CarId { get; set; }
 
-        [ForeignKey("parking_garage_id")]
+        [Column("parking_garage_id")]
         public int GarageId { get; set; }
 
         [Column("cents")]

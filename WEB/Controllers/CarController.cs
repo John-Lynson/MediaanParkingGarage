@@ -5,30 +5,44 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Policy;
 using CORE.Services;
 using CORE.Entities;
+using System.Security.Claims;
+using DALL.Context;
+using DALL.Repositories;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaanParkingGarage.Controllers
 {
     public class CarController : Controller
     {
         private readonly RegistrationService _registrationService;
+        private readonly AccountService _accountService;
 
-        public CarController(RegistrationService registrationService)
+        public CarController(GarageContext context)
         {
-            _registrationService = registrationService;
+            this._registrationService = new RegistrationService(new CarRepository(context));
+            this._accountService = new AccountService(new AccountRepository(context));
         }
 
         [HttpPost]
-        public IActionResult CreateCar([FromBody] CarRequestModel model)
+        public IActionResult CreateCar(string licensePlate)
         {
+            // Get account for it's id via the auth0Id
+            string? auth0Id = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            Account account = this._accountService.GetAccountByAuth0Id(auth0Id);
+
+            // Register & Link car to the account
             try
             {
-                _registrationService.CreateCar(model.AccountId, model.LicensePlate);
-                return Ok("Car created successfully.");
+                this._registrationService.CreateCar(account.Id, licensePlate);
+                this.TempData["StatusMessage"] = "Succesfully registered license plate.";
             }
-            catch (Exception ex)
+            catch (DbUpdateException)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                this.TempData["StatusMessage"] = "License plate registration failed. Possibly already exists and is linked to an account.";
             }
+            
+            return Redirect("/Home/RegisterPlate");
         }
     }
 }

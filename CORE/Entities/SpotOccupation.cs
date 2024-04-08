@@ -10,10 +10,10 @@ namespace CORE.Entities
 {
     public class SpotOccupation : Entity
     {
-        [ForeignKey("parking_spot_id")]
+        [Column("parking_spot_id")]
         public int ParkingSpotId { get; set; }
 
-        [ForeignKey("car_id")]
+        [Column("car_id")]
         public int CarId { get; set; }
 
         [Column("expected_start_datetime")]
