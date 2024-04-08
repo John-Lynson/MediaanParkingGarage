@@ -16,6 +16,11 @@ namespace WEB.Controllers
 
         public IActionResult Index()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+
+            }
+
             return View();
         }
 

@@ -1,6 +1,7 @@
 ﻿using CORE.Entities;
 using CORE.Interfaces.IRepositories;
 using DALL.Context;
+using Microsoft.Data.SqlClient;
 
 namespace DALL.Repositories
 {
@@ -10,7 +11,20 @@ namespace DALL.Repositories
 
         public Account GetAccountByAuth0Id(string auth0Id)
         {
-            return this._dbSet.Where(x => x.Auth0UserId == auth0Id).First();
+            try
+            {
+                return this._dbSet.Where(x => x.Auth0UserId == auth0Id).First();
+            }
+            catch (InvalidOperationException) // "Sequence contains no elements"
+            {
+                Console.Error.WriteLine("Table is empty.");
+                return null;
+            }
+            catch (SqlException)
+            {
+                Console.Error.WriteLine("Account does not exist.");
+                return null;
+            }
         }
     }
 }
