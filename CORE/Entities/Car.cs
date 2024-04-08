@@ -10,7 +10,7 @@ namespace CORE.Entities
 {
     public class Car : Entity
     {
-        [ForeignKey("account_id")]
+        [Column("account_id")]
         public int AccountId { get; set; }
 
         [Column("license_plate")]

@@ -1,15 +1,25 @@
 ﻿<link rel="stylesheet" type="text/css" href="~/css/regplate.css" />
 
 @{
-    ViewData["Title"] = "Register your plate";
+	ViewData["Title"] = "Register your plate";
 }
 
-
-<div class="license-plate-form">
-    <h2>Register your license plate</h2>
-    <p>Please enter your license plate below:</p>
-    <form>
-        <input type="text" id="licensePlate" name="licensePlate" placeholder="Enter License Plate Number" required>
-        <button type="submit">Submit</button>
-    </form>
+<div class="container">
+	<h1>Update Your Car Registry</h1>
+	@if (this.User.Identity.IsAuthenticated)
+	{
+		<div class="license-plate-form">
+			<h2>Register your license plate</h2>
+			<p>Please enter your license plate below:</p>
+			<form id="licensePlateForm" method="post" asp-controller="Car" asp-action="CreateCar">
+				<input type="text" id="licensePlate" name="licensePlate" placeholder="Enter License Plate" required>
+				<button type="submit">Submit</button>
+			</form>
+			@TempData["StatusMessage"]
+		</div>
+	}
+	else
+	{
+		<p>Please login to make this component available.</p>
+	}
 </div>

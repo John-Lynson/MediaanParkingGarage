@@ -10,7 +10,7 @@ namespace CORE.Entities
 {
     public class ParkingSpot : Entity
     {
-        [ForeignKey("parking_garage_id")]
+        [Column("parking_garage_id")]
         public int GarageId { get; set; }
 
         [Column("disabled")]

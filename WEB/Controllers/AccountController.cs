@@ -42,7 +42,7 @@ public class AccountController : Controller
             }
         }
 
-        return Redirect("/home");
+        return Redirect("/Home");
     }
 
     public async Task Logout()
