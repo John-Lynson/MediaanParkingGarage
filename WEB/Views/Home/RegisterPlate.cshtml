@@ -5,12 +5,38 @@
 }
 <div class="container">
     <h1>Update Your Car Registry</h1>
-<div class="license-plate-form">
-    <h2>Register your license plate</h2>
-    <p>Please enter your license plate below:</p>
-    <form>
-        <input type="text" id="licensePlate" name="licensePlate" placeholder="Enter License Plate" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="license-plate-form">
+        <h2>Register your license plate</h2>
+        <p>Please enter your license plate below:</p>
+        <form id="licensePlateForm">
+            <input type="text" id="licensePlate" name="licensePlate" placeholder="Enter License Plate" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
-</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#licensePlateForm').submit(function (e) {
+            e.preventDefault(); 
+
+            var licensePlate = $('#licensePlate').val(); 
+
+            $.ajax({
+                url: '/YourController/CreateCar', // Adjust the URL to match your controller route
+                type: 'POST',
+                data: {
+                    accountId: 123, // what is auth0 id?
+                    licensePlate: licensePlate
+                },
+                success: function (response) {
+                    console.log('Car created successfully');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error creating car:', error);
+                }
+            });
+        });
+    });
+</script>
