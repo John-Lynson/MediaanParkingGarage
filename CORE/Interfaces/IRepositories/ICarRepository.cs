@@ -9,6 +9,5 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface ICarRepository : IRepository<Car>
     {
-
     }
 }
