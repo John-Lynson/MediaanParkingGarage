@@ -24,7 +24,7 @@ namespace CORE.Services
             Account account = new Account 
             { 
                 Username = username,
-                Auth0UserId = auth0UserId,
+                Auth0UserId = auth0UserId
             };
             
             this._accountRepository.Create(account);
@@ -46,16 +46,15 @@ namespace CORE.Services
 
         private void CheckIfCerdentialsAreValid (string username, string auth0UserId)
         {
-			if (username == null) // Not using string.isnullorempty() here since then the error would be incorect and its being checked later in the code
+			if (username == null) // Not using string.isnullorempty() here since then the error would be "incorect" and its being checked later in the code
 				throw new ArgumentNullException("Username can't be null.", nameof(username));
 			if (username.Length < 3 || username.Length > 50)
 				throw new ArgumentException($"Username too long or short (min = 3, max = 50). \r\nCurrent length = {username.Length}.");
 
-			if (auth0UserId == null) // Not using string.isnullorempty() here since then the error would be incorect and its being checked later in the code
-				throw new ArgumentNullException("Username can't be null.", nameof(username));
-			if (auth0UserId.Length < 1 || auth0UserId.Length > 50)
-				throw new ArgumentException($"Auth0 user Id too long or short (min = 1, max = 64). \r\nCurrent length = {username.Length}.");
-
+			if (auth0UserId == null) // Not using string.isnullorempty() here since then the error would be "incorect" and its being checked later in the code
+				throw new ArgumentNullException("Auth0 user id can't be null.", nameof(auth0UserId));
+			if (auth0UserId.Length < 3 || auth0UserId.Length > 64)
+				throw new ArgumentException($"Auth0 user Id too long or short (min = 1, max = 64). \r\nCurrent length = {auth0UserId.Length}.");
 		}
 	}
 }
