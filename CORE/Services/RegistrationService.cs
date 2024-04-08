@@ -19,7 +19,7 @@ namespace CORE.Services
         public void CreateCar(int accountId, string licensePlate)
         {
             if (accountId <= 0)
-                throw new ArgumentException("Account ID cannot be null.", nameof(accountId));
+                throw new ArgumentException("Account ID cannot be zero or less.", nameof(accountId));
 
             if (string.IsNullOrEmpty(licensePlate))
                 throw new ArgumentException("License plate cannot be empty.", nameof(licensePlate));
