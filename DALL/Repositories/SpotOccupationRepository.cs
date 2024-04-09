@@ -22,5 +22,15 @@ namespace DALL.Repositories
             return availableSpots;
 
         }
+
+        public SpotOccupation FindByCarIdAndDate(int carId, DateTime startDate, DateTime endDate)
+        {
+            // Query the DbSet for SpotOccupation entities
+            return this._dbSet
+                       .Where(so => so.CarId == carId
+                                    && ((so.ExpectedStartDate >= startDate && so.ExpectedStartDate <= endDate)
+                                    || (so.ActualStartDate >= startDate && so.ActualStartDate <= endDate)))
+                       .FirstOrDefault();
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace CORE.Interfaces.IServices
     public interface IReservationService
     {
         public bool ReserveSpots(int carId, List<int> parkingSpotIds, DateTime expectedStartDate, DateTime expectedEndDate);
+        int RetrieveOrReserveSpot(int carId, DateTime expectedStartDate, DateTime expectedEndDate);
     }
 }
