@@ -1,0 +1,48 @@
+﻿.about-section {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-info {
+    margin-bottom: 20px;
+}
+
+.profile-photo2 {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.offline-button {
+    padding: 10px 20px;
+    background-color: #b22222; /* donkerrood */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 100;
+}
+
+    .offline-button:hover {
+        background-color: #ff0000; /* felrood */
+    }
+
+.license-plate-box {
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f0f0f0; /* lichte achtergrondkleur */
+    border: 1px solid #ccc; /* discrete rand */
+    border-radius: 5px; /* afgeronde hoeken */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* subtiele schaduw */
+    width: 80%; /* of een specifieke breedte, afhankelijk van de layout */
+    text-align: center; /* tekst centreren */
+}
+
+.license-plate-text {
+    color: #333; /* donkere tekstkleur voor leesbaarheid */
+    font-size: 16px; /* leesbare tekstgrootte */
+    font-weight: bold; /* vetgedrukte tekst */
+}

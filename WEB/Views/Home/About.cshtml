@@ -1,6 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Account Details";
+    var userName = User.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
+    var profilePictureUrl = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+    var licensePlate = ViewData["LicensePlate"] as string ?? "Nog geen license plate toegevoegd.";  // Zorgt voor een fallback tekst
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>This is a temp page </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/account.css" rel="stylesheet" />
+    <script src="~/js/site.js"></script>
+</head>
+<body>
+    <div class="about-section">
+        <h1>@ViewData["Title"]</h1>
+        <div class="profile-info">
+            <img src="@profilePictureUrl" alt="Profile Photo" class="profile-photo2" />
+            <p>Username: @userName</p>
+        </div>
+        <div class="license-plate-box">
+            <p class="license-plate-text">@licensePlate</p>
+        </div>
+        <button class="offline-button" onclick="confirmOffline()">Go Offline</button>
+    </div>
+
+    <script>
+        function confirmOffline() {
+            if (confirm("Are you sure you want to go offline?")) {
+                window.location.href = '@Url.Action("Logout", "Account")';
+            }
+        }
+    </script>
+</body>
+</html>
