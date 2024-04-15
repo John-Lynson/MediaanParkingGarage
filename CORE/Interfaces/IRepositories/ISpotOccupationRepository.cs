@@ -9,6 +9,8 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface ISpotOccupationRepository : IRepository<SpotOccupation>
     {
-        public SpotOccupation GetLatestByCarId(int carId);
-    }
+        List<int> GetAvailableSpaces(List<int> parkingSpotIds, DateTime expectedStartDate, DateTime expectedEndDate);
+        SpotOccupation FindByCarIdAndDate(int carId, DateTime startDate, DateTime endDate);
+		public SpotOccupation GetLatestByCarId(int carId);
+	}
 }
