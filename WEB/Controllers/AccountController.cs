@@ -41,7 +41,7 @@ public class AccountController : Controller
             if (account == null)
             {
                 string? username = this.User.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value;
-                account = this._accountService.Create(username, auth0Id, "SecureHashedPassword"); // Example change
+                account = this._accountService.CreateAccount(username, auth0Id); // Example change
             }
         }
 

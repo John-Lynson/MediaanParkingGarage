@@ -20,7 +20,7 @@ namespace MediaanParkingGarage.Controllers
 
         public CarController(GarageContext context)
         {
-            this._registrationService = new RegistrationService(new CarRepository(context));
+            this._registrationService = new RegistrationService(new CarRepository(context), new AccountRepository(context));
             this._accountService = new AccountService(new AccountRepository(context));
         }
 
