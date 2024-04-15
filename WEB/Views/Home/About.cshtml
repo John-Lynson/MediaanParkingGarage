@@ -2,7 +2,7 @@
     ViewData["Title"] = "Account Details";
     var userName = User.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
     var profilePictureUrl = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
-    var licensePlate = ViewData["LicensePlate"] as string ?? "Nog geen license plate toegevoegd.";  // Zorgt voor een fallback tekst
+    var licensePlate = ViewData["LicensePlate"] as string ?? "Nog geen license plate toegevoegd.";
 }
 
 <!DOCTYPE html>

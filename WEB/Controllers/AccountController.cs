@@ -50,8 +50,20 @@ public class AccountController : Controller
 
     public async Task<IActionResult> About()
     {
-        var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        Car userCar = await _dbContext.Cars.FirstOrDefaultAsync(c => c.AccountId == int.Parse(userId));
+        // Haal Auth0Id op uit de huidige gebruiker's claims
+        string auth0Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        // Gebruik de AccountService om het account te vinden dat overeenkomt met de Auth0Id
+        Account userAccount = _accountService.GetAccountByAuth0Id(auth0Id);
+
+        if (userAccount == null)
+        {
+            ViewData["LicensePlate"] = "Account not found.";
+            return View();
+        }
+
+        // Gebruik de AccountId om de bijbehorende auto op te halen
+        Car userCar = await _dbContext.Cars.FirstOrDefaultAsync(c => c.AccountId == userAccount.Id);
 
         if (userCar == null)
         {
@@ -59,10 +71,10 @@ public class AccountController : Controller
         }
         else
         {
-            ViewData["LicensePlate"] = userCar.LicensePlate ?? "Nog geen license plate toegevoegd."; 
+            ViewData["LicensePlate"] = userCar.LicensePlate ?? "Nog geen license plate toegevoegd.";
         }
 
-        ViewData["Title"] = "About";
+        ViewData["Title"] = "Account Details";
         ViewData["UserName"] = User.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
         ViewData["ProfilePictureUrl"] = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
 
