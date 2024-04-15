@@ -32,6 +32,10 @@ html {
     border: 2px solid white;
 }
 
+.main-content {
+    padding-top: 50px;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     margin-bottom: 60px;

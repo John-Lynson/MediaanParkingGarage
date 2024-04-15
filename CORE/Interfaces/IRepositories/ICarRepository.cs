@@ -9,6 +9,6 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface ICarRepository : IRepository<Car>
     {
-
+        public List<Car> GetAllByAccountId(int accountId);
     }
 }
