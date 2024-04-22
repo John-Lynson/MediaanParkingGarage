@@ -38,7 +38,7 @@ namespace ParkingGarage.Tests
                                          .Returns(parkingSpotIds); // Simulating all spots are available
 
             // Act
-            var result = _reservationService.ReserveSpots(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
+            var result = _reservationService.AttemptToReserveSpot(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
 
             // Assert
             Assert.IsTrue(result);
@@ -60,7 +60,7 @@ namespace ParkingGarage.Tests
                                          .Returns(availableSpots);
 
             // Act
-            _reservationService.ReserveSpots(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
+            _reservationService.AttemptToReserveSpot(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
 
             // Since an exception is expected, no need for Assert.IsTrue here
         }

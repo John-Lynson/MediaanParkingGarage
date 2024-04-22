@@ -12,5 +12,10 @@ namespace DALL.Repositories
         {
             return this._dbSet.Select(p => p.Id).ToList();
         }
+
+        public List<ParkingSpot> GetParkingSpotsByGarageId(int garageId)
+        {
+            return this._dbSet.Where(e => e.GarageId == garageId).ToList();
+        }
     }
 }

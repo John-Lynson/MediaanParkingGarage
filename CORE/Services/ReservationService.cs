@@ -1,6 +1,5 @@
 ﻿using CORE.Entities;
 using CORE.Interfaces.IRepositories;
-using CORE.Interfaces.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,68 +8,79 @@ using System.Threading.Tasks;
 
 namespace CORE.Services
 {
-    public class ReservationService : IReservationService
-    {
-        private readonly ISpotOccupationRepository _spotOccupationRepository;
-        private readonly IParkingSpotRepository _parkingSpotRepository;
+	public class ReservationService
+	{
+		private readonly ISpotOccupationRepository _spotOccupationRepository;
+		private readonly IParkingSpotRepository _parkingSpotRepository;
+		private readonly IGarageRepository _garageRepository;
 
 
-        public ReservationService(ISpotOccupationRepository spotOccupationRepository, IParkingSpotRepository parkingSpotRepository)
-        {
-            _spotOccupationRepository = spotOccupationRepository;
-            _parkingSpotRepository = parkingSpotRepository;
-        }
-        public int RetrieveOrReserveSpot(int carId, DateTime expectedStartDate, DateTime expectedEndDate)
-        {
-            // Check for existing reservation
-            var existingReservation = _spotOccupationRepository.FindByCarIdAndDate(carId, expectedStartDate, expectedEndDate);
-            if (existingReservation != null)
-            {
-                return existingReservation.ParkingSpotId; // Return the ID of the already reserved spot
-            }
+		public ReservationService(ISpotOccupationRepository spotOccupationRepository, IParkingSpotRepository parkingSpotRepository, IGarageRepository garageRepository)
+		{
+			_spotOccupationRepository = spotOccupationRepository;
+			_parkingSpotRepository = parkingSpotRepository;
+			_garageRepository = garageRepository;
+		}
 
-            // Attempt to find an available spot
-            var allSpots = _parkingSpotRepository.GetAllParkingSpotIds(); 
-            var availableSpots = _spotOccupationRepository.GetAvailableSpaces(allSpots, expectedStartDate, expectedEndDate);
+		public int RetrieveOrReserveSpot(int carId, DateTime expectedStartDate, DateTime expectedEndDate)
+		{
+			// Check for existing reservation
+			var existingReservation = _spotOccupationRepository.FindByCarIdAndDate(carId, expectedStartDate, expectedEndDate);
+			if (existingReservation != null)
+			{
+				return existingReservation.ParkingSpotId; // Return the ID of the already reserved spot
+			}
 
-            if (!availableSpots.Any())
-            {
-                throw new InvalidOperationException("No available spots.");
-            }
+			// Attempt to find an available spot
+			var allSpots = _parkingSpotRepository.GetAllParkingSpotIds();
+			var availableSpots = _spotOccupationRepository.GetAvailableSpaces(allSpots, expectedStartDate, expectedEndDate);
 
-            var spotId = availableSpots.First(); 
-            ReserveSpots(carId, new List<int> { spotId }, expectedStartDate, expectedEndDate); 
+			if (!availableSpots.Any())
+			{
+				throw new InvalidOperationException("No available spots.");
+			}
 
-            return spotId; 
-        }
-        public bool ReserveSpots(int carId, List<int> parkingSpotIds, DateTime expectedStartDate, DateTime expectedEndDate)
-        {
-            var availableSpots = _spotOccupationRepository.GetAvailableSpaces(parkingSpotIds, expectedStartDate, expectedEndDate);
-            var unavailableSpots = parkingSpotIds.Except(availableSpots).ToList();
+			var spotId = availableSpots.First();
+			AttemptToReserveSpot(carId, new List<int> { spotId }, expectedStartDate, expectedEndDate);
 
-            if (unavailableSpots.Any())
-            {
-                // Throw an exception listing the unavailable spots
-                var unavailableSpotsMessage = string.Join(", ", unavailableSpots);
-                throw new InvalidOperationException($"The following spots are unavailable: {unavailableSpotsMessage}.");
-            }
+			return spotId;
+		}
 
-            foreach (var spotId in availableSpots)
-            {
-                var spotOccupation = new SpotOccupation
-                {
-                    ParkingSpotId = spotId,
-                    CarId = carId, 
-                    ExpectedStartDate = expectedStartDate,
-                    ExpectedEndDate = expectedEndDate,
-                    ActualStartDate = DateTime.MinValue, // Placeholder, to be updated when the spot is actually occupied.
-                    ActualEndDate = DateTime.MinValue, // Placeholder, to be updated when the spot is vacated.
-                };
+		public void AttemptToReserveSpotAtGarage(int carId, int garageId, DateTime expectedStartDate, DateTime expectedEndDate)
+		{
+			AttemptToReserveSpot(carId, new ParkingSpotService(_parkingSpotRepository).GetParkingSpotByGarageId(garageId).Select(model => model.Id).ToList(), expectedStartDate, expectedEndDate);
+		}
 
-                _spotOccupationRepository.Create(spotOccupation);
-            }
+		public void AttemptToReserveSpot(int carId, int parkingSpotId, DateTime expectedStartDate, DateTime expectedEndDate) => AttemptToReserveSpot(carId, new List<int> { parkingSpotId }, expectedStartDate, expectedEndDate);
 
-            return true;
-        }
-    }
+		public void AttemptToReserveSpot(int carId, List<int> parkingSpotIds, DateTime expectedStartDate, DateTime expectedEndDate)
+		{
+			var availableSpots = _spotOccupationRepository.GetAvailableSpaces(parkingSpotIds, expectedStartDate, expectedEndDate);
+			var unavailableSpots = parkingSpotIds.Except(availableSpots).ToList();
+
+			if (unavailableSpots.Any())
+			{
+				// Throw an exception listing the unavailable spots
+				var unavailableSpotsMessage = string.Join(", ", unavailableSpots);
+				throw new InvalidOperationException($"The following spots are unavailable: {unavailableSpotsMessage}.");
+			}
+
+			if (!availableSpots.Any())
+			{
+				throw new InvalidOperationException($"None of the provided spots have the ability to be used. \r\n Passed spotIds: {string.Join(",", parkingSpotIds)}");
+			}
+			
+			var spotOccupation = new SpotOccupation
+			{
+				ParkingSpotId = availableSpots.First(),
+				CarId = carId,
+				ExpectedStartDate = expectedStartDate,
+				ExpectedEndDate = expectedEndDate,
+				ActualStartDate = DateTime.MinValue, // Placeholder, to be updated when the spot is actually occupied.
+				ActualEndDate = DateTime.MinValue, // Placeholder, to be updated when the spot is vacated.
+			};
+
+			_spotOccupationRepository.Create(spotOccupation);
+		}
+	}
 }

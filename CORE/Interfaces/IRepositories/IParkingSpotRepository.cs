@@ -10,5 +10,7 @@ namespace CORE.Interfaces.IRepositories
     public interface IParkingSpotRepository : IRepository<ParkingSpot>
     {
         List<int> GetAllParkingSpotIds();
-    }
+        public List<ParkingSpot> GetParkingSpotsByGarageId(int garageId);
+
+	}
 }
