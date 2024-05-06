@@ -3,8 +3,10 @@
     var navbar = document.querySelector(".navbar");
 
     function managePreloaderVisibility(hide) {
-        preloader.style.display = hide ? 'none' : 'block';
-        navbar.style.display = hide ? "flex" : "none";
+        if (preloader && navbar) {
+            preloader.style.display = hide ? 'none' : 'block';
+            navbar.style.display = hide ? "flex" : "none";
+        }
     }
 
     if (sessionStorage.getItem('isNavigatingWithinApp')) {
@@ -22,7 +24,7 @@
         }
 
         window.addEventListener('load', hidePreloader);
-        setTimeout(hidePreloader, 5000); // Maximale tijdgrens als fallback
+        setTimeout(hidePreloader, 5000); // Maximum time limit as a fallback
     }
 
     sessionStorage.setItem('isNavigatingWithinApp', 'true');
