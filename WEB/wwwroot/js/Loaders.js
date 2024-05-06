@@ -1,43 +1,29 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     var preloader = document.getElementById("preloader");
-    var navbar = document.querySelector(".navbar"); // Pas deze selector aan aan jouw HTML
+    var navbar = document.querySelector(".navbar");
 
-    // Check if navigating within the app
-    if (sessionStorage.getItem('isNavigatingWithinApp')) {
-        // Hide preloader immediately if we're navigating within the app
-        preloader.style.display = 'none';
-        navbar.style.display = "flex"; // Zorg ervoor dat de navbar weer wordt getoond
-    } else {
-        // This is either the first load or a reload
-        if (!sessionStorage.getItem('isPreloaderShown')) {
-            preloader.style.display = 'block';
-            navbar.style.display = "none"; // Verberg de navbar tijdelijk
-            sessionStorage.setItem('isPreloaderShown', 'true');
-
-            var minPreloaderTime = 1500; // Minimale weergavetijd van de preloader in milliseconden
-            var startTime = new Date().getTime(); // Starttijd
-
-            function hidePreloader() {
-                var elapsedTime = new Date().getTime() - startTime;
-                if (elapsedTime < minPreloaderTime) {
-                    setTimeout(function () {
-                        preloader.style.display = 'none';
-                        navbar.style.display = "flex"; // Toon de navbar weer
-                    }, minPreloaderTime - elapsedTime);
-                } else {
-                    preloader.style.display = 'none';
-                    navbar.style.display = "flex"; // Toon de navbar weer
-                }
-            }
-
-            window.addEventListener('load', hidePreloader);
-            setTimeout(hidePreloader, 5000); // Maximale weergavetijd als backup
-        } else {
-            preloader.style.display = 'none';
-            navbar.style.display = "flex"; // Zorg ervoor dat de navbar wordt getoond
-        }
+    function managePreloaderVisibility(hide) {
+        preloader.style.display = hide ? 'none' : 'block';
+        navbar.style.display = hide ? "flex" : "none";
     }
 
-    // Mark future navigations as within-app navigations
+    if (sessionStorage.getItem('isNavigatingWithinApp')) {
+        managePreloaderVisibility(true);
+    } else {
+        sessionStorage.setItem('isPreloaderShown', 'true');
+        managePreloaderVisibility(false);
+
+        var minPreloaderTime = 1500;
+        var startTime = new Date().getTime();
+
+        function hidePreloader() {
+            var elapsedTime = new Date().getTime() - startTime;
+            setTimeout(() => managePreloaderVisibility(true), Math.max(minPreloaderTime - elapsedTime, 0));
+        }
+
+        window.addEventListener('load', hidePreloader);
+        setTimeout(hidePreloader, 5000); // Maximale tijdgrens als fallback
+    }
+
     sessionStorage.setItem('isNavigatingWithinApp', 'true');
 });

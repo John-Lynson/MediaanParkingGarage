@@ -16,9 +16,10 @@ namespace WEB.Controllers
 
         public IActionResult Index()
         {
-            if (this.User.Identity.IsAuthenticated)
-            {
 
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Welcome", "Home");
             }
 
             return View();
@@ -35,6 +36,16 @@ namespace WEB.Controllers
             ViewData["Title"] = "Profiel";
             return View();
         }
+
+        public IActionResult Welcome()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
 
         public IActionResult RegisterPlate()
         {

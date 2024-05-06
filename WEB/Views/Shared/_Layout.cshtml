@@ -12,7 +12,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/loaders.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/payment.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/account.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/welcome.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WEB.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -27,37 +30,34 @@
     </div>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="navbar fixed-bottom navbar-light bg-light border-top">
-        <div class="container-fluid justify-content-around">
-            <a class="nav-link" href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i></a>
-            <a class="nav-link" href="@Url.Action("Reserve", "Home")"><i class="fas fa-solid fa-calendar"></i></a>
-            <a class="nav-link" href="@Url.Action("RegisterPlate", "Home")"><i class="fas fa-car"></i></a>
-            <a class="nav-link" href="@Url.Action("Payment", "Home")"><i class="fas fa-regular fa-credit-card"></i></a>
-            @if (User.Identity.IsAuthenticated)
-            {
-                var profilePictureUrl = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
-                if (!string.IsNullOrEmpty(profilePictureUrl))
-                {
-                    <a class="nav-link" href="@Url.Action("About", "Home")">
-                        <img src="@profilePictureUrl" alt="Profile" class="profile-photo" />
-                    </a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <nav class="navbar fixed-bottom navbar-light bg-light border-top">
+            <div class="container-fluid justify-content-around">
+                <a class="nav-link" href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i></a>
+                <a class="nav-link" href="@Url.Action("Reserve", "Home")"><i class="fas fa-calendar"></i></a>
+                <a class="nav-link" href="@Url.Action("RegisterPlate", "Home")"><i class="fas fa-car"></i></a>
+                <a class="nav-link" href="@Url.Action("Payment", "Home")"><i class="fas fa-credit-card"></i></a>
+
+                @{
+                    var profilePictureUrl = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+                    if (!string.IsNullOrEmpty(profilePictureUrl))
+                    {
+                        <a class="nav-link" href="@Url.Action("About", "Home")">
+                            <img src="@profilePictureUrl" alt="Profile" class="profile-photo" />
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="nav-link" href="@Url.Action("About", "Home")">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    }
                 }
-                else
-                {
-                    <a class="nav-link" href="@Url.Action("About", "Home")">
-                        <i class="fas fa-user"></i>
-                    </a>
-                }
-            }
-            else
-            {
-                // The icon without "Login" text
-                <a class="nav-link" href="@Url.Action("Login", "Account")">
-                    <i class="fas fa-user"></i>
-                </a>
-            }
-        </div>
-    </nav>
+            </div>
+        </nav>
+    }
+
 
     <footer class="border-top footer text-muted">
         <!-- Footer content here -->
@@ -68,6 +68,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/Loaders.js" asp-append-version="true"></script>
+    <script src="~/js/welcome.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
