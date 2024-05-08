@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using CORE.Services;
+using CORE.Interfaces.IRepositories;
+using DALL.Repositories;
 
 namespace WEB
 {
@@ -16,11 +18,15 @@ namespace WEB
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<PaymentService>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<ISpotOccupationRepository, SpotOccupationRepository>();
+
+            // Register PaymentService
+            builder.Services.AddScoped<PaymentService>();
 
 
-			// Auth0 configuratie
-			builder.Services.AddAuth0WebAppAuthentication(options =>
+            // Auth0 configuratie
+            builder.Services.AddAuth0WebAppAuthentication(options =>
 			{
 				options.Domain = builder.Configuration["Auth0:Domain"];
 				options.ClientId = builder.Configuration["Auth0:ClientId"];
