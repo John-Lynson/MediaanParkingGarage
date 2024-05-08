@@ -63,7 +63,7 @@ namespace CORE.Services
             var molliePaymentResponse = await _molliePaymentClient.CreatePaymentAsync(paymentRequest);
 
             // Here you might want to update your payment record with external payment details
-            payment.ExternalPaymentId = molliePaymentResponse.Id; // Link Mollie payment ID, Add new column for payment
+            //payment.ExternalPaymentId = molliePaymentResponse.Id; // Link Mollie payment ID, Add new column for payment
             _paymentRepository.Update(payment);
 
             return payment;
