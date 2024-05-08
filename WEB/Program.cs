@@ -6,6 +6,7 @@ using DALL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using CORE.Services;
 
 namespace WEB
 {
@@ -14,6 +15,9 @@ namespace WEB
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSingleton<PaymentService>();
+
 
             // Auth0 configuratie
             builder.Services.AddAuth0WebAppAuthentication(options =>
