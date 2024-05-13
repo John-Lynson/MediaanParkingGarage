@@ -1,68 +1,18 @@
-﻿@* <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
-
-
-@{
-    ViewData["Title"] = "Reserve a Spot";
-}
-
-<div class="container">
-    <h1>Reserve a Parking Spot</h1>
-    <div class="reservation-form">
-        <h2>Select Location and Date</h2>
-        <form>
-            <div class="form-group">
-                <label for="location">Select Location:</label>
-                <select id="location" name="location" class="form-control">
-                    <option value="location1">Location 1</option>
-                    <option value="location2">Location 2</option>
-                    <option value="location3">Location 3</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="datetime">Select Date and Time:</label>
-                <input type="text" id="datetime" name="datetime" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Reserve Spot</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('datetime');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            selectable: true,
-            timeZone: 'local', // Adjust time zone as per your requirement
-            select: function (info) {
-                // You can handle the selection event here
-                console.log('Selected date:', info.startStr);
-            }
-        });
-
-        calendar.render();
-    });
-</script> *@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang='en'>
 <head>
     <meta charset='utf-8' />
+    <title>@ViewData["Reserve a Spot"]</title>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
 
         function openModal(dateStr) {
-            // Set the date in the modal
             document.getElementById('selectedDate').innerText = dateStr;
 
-            // Show the modal
             document.getElementById('timeSelectionModal').style.display = 'block';
         }
 
         function closeModal() {
-            // Hide the modal
             document.getElementById('timeSelectionModal').style.display = 'none';
         }
 
@@ -79,30 +29,27 @@
 
     </script>
     <style>
-        /* The modal (background) */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            display: none; 
+            position: fixed;
+            z-index: 1;
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            width: 100%; 
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
         }
 
-        /* Modal content */
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
+            margin: 15% auto; 
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 80%; 
         }
 
-        /* The close button */
         .close {
             color: #aaa;
             float: right;
@@ -119,12 +66,21 @@
     </style>
 </head>
 <body>
+    <h1>Reserve a Parking Spot</h1>
+
+    <div class="form-group">
+        <label for="location">Select Location:</label>
+        <select id="location" name="location" class="form-control">
+            <option value="location1">Location 1</option>
+            <option value="location2">Location 2</option>
+            <option value="location3">Location 3</option>
+        </select>
+
+        <br />
     <div id='calendar'></div>
 
-    <!-- The Modal -->
     <div id="timeSelectionModal" class="modal">
 
-        <!-- Modal content -->
         <div class="modal-content">
             <span class="close" onclick="closeModal()">×</span>
             <p>You selected: <span id="selectedDate"></span></p>
