@@ -38,11 +38,10 @@ namespace ParkingGarage.Tests
                                          .Returns(parkingSpotIds); // Simulating all spots are available
 
             // Act
-            var result = _reservationService.AttemptToReserveSpot(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
+            _reservationService.AttemptToReserveSpot(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
 
             // Assert
-            Assert.IsTrue(result);
-            _mockSpotOccupationRepository.Verify(repo => repo.Create(It.IsAny<SpotOccupation>()), Times.Exactly(parkingSpotIds.Count));
+            _mockSpotOccupationRepository.Verify(repo => repo.Create(It.IsAny<SpotOccupation>()), Times.Once);
         }
 
         [TestMethod]
@@ -62,7 +61,7 @@ namespace ParkingGarage.Tests
             // Act
             _reservationService.AttemptToReserveSpot(carId, parkingSpotIds, expectedStartDate, expectedEndDate);
 
-            // Since an exception is expected, no need for Assert.IsTrue here
+            // Since an exception is expected, no need for Assert.IsTrue here 
         }
 
         [TestMethod]

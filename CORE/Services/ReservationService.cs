@@ -12,14 +12,12 @@ namespace CORE.Services
 	{
 		private readonly ISpotOccupationRepository _spotOccupationRepository;
 		private readonly IParkingSpotRepository _parkingSpotRepository;
-		private readonly IGarageRepository _garageRepository;
 
 
-		public ReservationService(ISpotOccupationRepository spotOccupationRepository, IParkingSpotRepository parkingSpotRepository, IGarageRepository garageRepository)
+		public ReservationService(ISpotOccupationRepository spotOccupationRepository, IParkingSpotRepository parkingSpotRepository)
 		{
 			_spotOccupationRepository = spotOccupationRepository;
 			_parkingSpotRepository = parkingSpotRepository;
-			_garageRepository = garageRepository;
 		}
 
 		public int RetrieveOrReserveSpot(int carId, DateTime expectedStartDate, DateTime expectedEndDate)
@@ -61,8 +59,7 @@ namespace CORE.Services
 			if (unavailableSpots.Any())
 			{
 				// Throw an exception listing the unavailable spots
-				var unavailableSpotsMessage = string.Join(", ", unavailableSpots);
-				throw new InvalidOperationException($"The following spots are unavailable: {unavailableSpotsMessage}.");
+				throw new InvalidOperationException($"The following spots are unavailable: {string.Join(", ", unavailableSpots)}.");
 			}
 
 			if (!availableSpots.Any())
