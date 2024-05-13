@@ -39,7 +39,7 @@ namespace MediaanParkingGarage.Controllers
             }
             catch (DbUpdateException)
             {
-                this.TempData["StatusMessage"] = "License plate registration failed. Possibly already exists and is linked to an account.";
+                this.TempData["StatusMessage"] = "License plate registration failed. Possibly already exists and is linked to a (different) account.";
             }
             
             return Redirect("/Home/RegisterPlate");

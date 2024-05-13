@@ -43,8 +43,8 @@ namespace WEB
 
 			builder.Services.AddDbContext<GarageContext>(options =>
 				{
-					// options.UseSqlServer("Data Source=10.0.3.10;Database=mediaan_parking_garage;User ID=SA;Password=Software01!;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
-					options.UseInMemoryDatabase("MockGarageDB");
+					options.UseSqlServer("Data Source=10.0.3.10;Database=mediaan_parking_garage;User ID=SA;Password=Software01!;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+					// options.UseInMemoryDatabase("MockGarageDB");
 				});
 
 			// Build
