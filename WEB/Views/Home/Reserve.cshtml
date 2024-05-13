@@ -1,4 +1,8 @@
-﻿@{
+﻿@* <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.0/main.min.js"></script>
+
+
+@{
     ViewData["Title"] = "Reserve a Spot";
 }
 
@@ -16,11 +20,119 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="date">Select Date:</label>
-                <input type="date" id="date" name="date" class="form-control" required>
+                <label for="datetime">Select Date and Time:</label>
+                <input type="text" id="datetime" name="datetime" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Reserve Spot</button>
         </form>
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('datetime');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            selectable: true,
+            timeZone: 'local', // Adjust time zone as per your requirement
+            select: function (info) {
+                // You can handle the selection event here
+                console.log('Selected date:', info.startStr);
+            }
+        });
+
+        calendar.render();
+    });
+</script> *@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script>
+
+        function openModal(dateStr) {
+            // Set the date in the modal
+            document.getElementById('selectedDate').innerText = dateStr;
+
+            // Show the modal
+            document.getElementById('timeSelectionModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            // Hide the modal
+            document.getElementById('timeSelectionModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                dateClick: function(info) {
+                    openModal(info.dateStr);
+                }
+            });
+            calendar.render();
+        });
+
+    </script>
+    <style>
+        /* The modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id='calendar'></div>
+
+    <!-- The Modal -->
+    <div id="timeSelectionModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <p>You selected: <span id="selectedDate"></span></p>
+            <p>Select a time:</p>
+            <input type="time" id="time">
+            <button onclick="closeModal()">OK</button>
+        </div>
+
+    </div>
+</body>
+</html>
