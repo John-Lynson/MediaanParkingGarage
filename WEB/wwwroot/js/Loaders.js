@@ -1,43 +1,41 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     var preloader = document.getElementById("preloader");
-    var navbar = document.querySelector(".navbar"); // Pas deze selector aan aan jouw HTML
+    var navbar = document.querySelector(".navbar");
 
-    // Check if navigating within the app
-    if (sessionStorage.getItem('isNavigatingWithinApp')) {
-        // Hide preloader immediately if we're navigating within the app
-        preloader.style.display = 'none';
-        navbar.style.display = "flex"; // Zorg ervoor dat de navbar weer wordt getoond
-    } else {
-        // This is either the first load or a reload
-        if (!sessionStorage.getItem('isPreloaderShown')) {
-            preloader.style.display = 'block';
-            navbar.style.display = "none"; // Verberg de navbar tijdelijk
-            sessionStorage.setItem('isPreloaderShown', 'true');
-
-            var minPreloaderTime = 1500; // Minimale weergavetijd van de preloader in milliseconden
-            var startTime = new Date().getTime(); // Starttijd
-
-            function hidePreloader() {
-                var elapsedTime = new Date().getTime() - startTime;
-                if (elapsedTime < minPreloaderTime) {
-                    setTimeout(function () {
-                        preloader.style.display = 'none';
-                        navbar.style.display = "flex"; // Toon de navbar weer
-                    }, minPreloaderTime - elapsedTime);
-                } else {
-                    preloader.style.display = 'none';
-                    navbar.style.display = "flex"; // Toon de navbar weer
-                }
-            }
-
-            window.addEventListener('load', hidePreloader);
-            setTimeout(hidePreloader, 5000); // Maximale weergavetijd als backup
-        } else {
-            preloader.style.display = 'none';
-            navbar.style.display = "flex"; // Zorg ervoor dat de navbar wordt getoond
+    function managePreloaderVisibility(hide) {
+        if (preloader) {
+            preloader.style.display = hide ? 'none' : 'block';
+        }
+        if (navbar) {
+            navbar.style.display = hide ? "flex" : "none";
         }
     }
 
-    // Mark future navigations as within-app navigations
+    // Beheer preloader en navbar zichtbaarheid afhankelijk van navigatie binnen de app
+    if (sessionStorage.getItem('isNavigatingWithinApp')) {
+        managePreloaderVisibility(true);
+    } else {
+        // Markeren dat de preloader is getoond
+        sessionStorage.setItem('isPreloaderShown', 'true');
+        managePreloaderVisibility(false);
+
+        // Minimale tijd dat de preloader zichtbaar moet blijven
+        var minPreloaderTime = 4500;
+        var startTime = new Date().getTime();
+
+        function hidePreloader() {
+            var elapsedTime = new Date().getTime() - startTime;
+            // Verbergt de preloader na de minimale tijd, waarbij rekening wordt gehouden met de verstreken tijd sinds de pagina begon met laden
+            setTimeout(() => managePreloaderVisibility(true), Math.max(minPreloaderTime - elapsedTime, 0));
+        }
+
+        // Luister naar het 'load' event om te verzekeren dat alle pagina-inhoud is geladen voordat de preloader wordt verborgen
+        window.addEventListener('load', hidePreloader);
+
+        // Fallback, verbergt de preloader na een maximale tijdlimiet, ongeacht of de pagina volledig geladen is
+        setTimeout(hidePreloader, 9000); // Maximale tijdlimiet als backup
+    }
+
+    // Marker voor toekomstige navigaties binnen de app
     sessionStorage.setItem('isNavigatingWithinApp', 'true');
 });

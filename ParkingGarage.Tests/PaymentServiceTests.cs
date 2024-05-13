@@ -42,15 +42,18 @@ namespace ParkingGarage.Tests
                 ActualEndDate = _exitTime
             };
 
+            // other setup
+            string fakeMollieApiKey = "api key";
+
             // Set up the mock to return the test SpotOccupation record
             _mockSpotOccupationRepo.Setup(repo => repo.GetLatestByCarId(It.IsAny<int>())).Returns(_testSpotOccupation);
 
             // Initialize the service with the mocked repositories
-            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, _mockAccountRepo.Object, _mockCarRepo.Object, config);
+            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, _mockAccountRepo.Object, _mockCarRepo.Object, fakeMollieApiKey);
         }
 
         [TestMethod]
-        public void ProcessPayment_CalculatesCorrectFee()
+        public async void ProcessPayment_CalculatesCorrectFee()
         {
             // Arrange
             int ratePerHour = 300;
@@ -58,9 +61,10 @@ namespace ParkingGarage.Tests
             int carId = 1;
             int garageId = 1;
             DateTime paymentDate = DateTime.Now;
+            string fakeRedirectUrl = "url";
 
             // Act
-            var result = _paymentService.ProcessPayment(carId, garageId, paymentDate);
+            var result = await _paymentService.ProcessPaymentAsync(carId, garageId, paymentDate, fakeRedirectUrl);
 
             // Assert
             Assert.AreEqual(expectedFee, result.Price);

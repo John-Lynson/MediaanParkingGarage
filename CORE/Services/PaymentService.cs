@@ -23,9 +23,8 @@ namespace CORE.Services
         private readonly PaymentClient _molliePaymentClient;
         private const int RatePerHour = 300; // (€3/h)
 
-        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository, IConfiguration configuration)
+        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository, string mollieApiKey)
         {
-            string mollieApiKey = configuration["Mollie:ApiKey"];
             this._paymentRepository = paymentRepository;
             this._spotOccupationRepository = spotOccupationRepository;
             this._accountRepository = accountRepository;

@@ -1,6 +1,57 @@
 ﻿@{
-    ViewData["Title"] = "Payment";
+    ViewData["Title"] = "Check and Pay Outstanding Payments";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>This page will be used to view payments.</p>
+<div class="outstanding-payments">
+    <h2>Outstanding Payments</h2>
+    <ul>
+        <li onclick="showPaymentOptions()">Payment #1 - €100</li>
+        <li onclick="showPaymentOptions()">Payment #2 - €250</li>
+        <!-- More outstanding payments can be added here -->
+    </ul>
+</div>
+
+<div class="payment-options" style="display:none;">
+    <button onclick="showPaymentMethod('credit')" class="btn btn-option">Credit Card</button>
+    <button onclick="showPaymentMethod('ideal')" class="btn btn-option">iDEAL</button>
+</div>
+
+<div id="credit" class="payment-container" style="display:none;">
+    <!-- Credit card payment form -->
+    <form method="post" action="/submit-creditcard">
+        <!-- Form fields for credit card payment -->
+        <button type="submit" class="btn btn-primary">Pay with Credit Card</button>
+    </form>
+</div>
+
+<div id="ideal" class="payment-container" style="display:none;">
+    <!-- iDEAL payment form -->
+    <form method="post" action="/submit-ideal">
+        <!-- Form fields for iDEAL payment -->
+        <button type="submit" class="btn btn-primary">Pay with iDEAL</button>
+    </form>
+</div>
+
+<div class="payment-history">
+    <h2>Payment History</h2>
+    <ul>
+        <li>Transaction #1 - €150 - Paid on 2023-01-15</li>
+        <li>Transaction #2 - €75 - Paid on 2023-02-20</li>
+        <!-- More payment history items can be added here -->
+    </ul>
+</div>
+
+<script>
+    function showPaymentOptions() {
+        document.querySelector('.payment-options').style.display = 'block';
+    }
+
+    function showPaymentMethod(method) {
+        var methods = ['credit', 'ideal'];
+        methods.forEach(function (m) {
+            document.getElementById(m).style.display = 'none';
+        });
+        document.getElementById(method).style.display = 'block';
+    }
+</script>

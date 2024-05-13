@@ -20,11 +20,17 @@ namespace WEB.Controllers
         {
             this._logger = logger;
             this._registrationService = new RegistrationService(new CarRepository(context), new AccountRepository(context));
-            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context), );
+            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context), ""); //TODO change mollie api key
         }
 
         public IActionResult Index()
         {
+
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Welcome", "Home");
+            }
+
             return View();
         }
 
@@ -40,8 +46,8 @@ namespace WEB.Controllers
             }
             else
             {
-                List<Payment> payments = this._registrationService.GetCarsByAuth0Id(auth0Id);
-                return View(cars);
+                List<Payment> payments = this._paymentService.GetPaymentsByAuth0Id(auth0Id);
+                return View(payments);
             }
         }
 
@@ -62,6 +68,16 @@ namespace WEB.Controllers
                 return View(cars);
             }
         }
+
+        public IActionResult Welcome()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
 
         public IActionResult RegisterPlate()
         {

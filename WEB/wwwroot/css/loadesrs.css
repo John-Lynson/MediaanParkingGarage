@@ -1,0 +1,36 @@
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f4f4f4; /* Achtergrondkleur zoals de welkomstpagina */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.logo {
+    max-width: 200px; 
+    margin-bottom: 30px; 
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-gif {
+    width: 50px; /* Pas de grootte van je gif aan naar wens */
+    height: 50px;
+}

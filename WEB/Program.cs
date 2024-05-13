@@ -65,9 +65,9 @@ namespace WEB
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			app.MapControllerRoute(
-				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Welcome}/{id?}");
 
 			app.Run();
 		}
