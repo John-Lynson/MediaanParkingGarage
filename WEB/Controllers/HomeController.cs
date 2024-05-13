@@ -56,6 +56,7 @@ namespace WEB.Controllers
 
         public IActionResult Reserve()
         {
+            ViewData["Title"] = "Reserve a Spot";
             return View();
         }
 
