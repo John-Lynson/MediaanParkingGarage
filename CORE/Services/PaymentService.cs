@@ -10,6 +10,7 @@ using Mollie.Api.Models.Payment.Request;
 using Mollie.Api.Models;
 using Mollie.Api.Models.Payment;
 using Microsoft.Extensions.Configuration;
+using System.ComponentModel;
 
 namespace CORE.Services
 {
@@ -17,15 +18,18 @@ namespace CORE.Services
     {
         private readonly IPaymentRepository _paymentRepository;
         private readonly ISpotOccupationRepository _spotOccupationRepository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly ICarRepository _carRepository;
         private readonly PaymentClient _molliePaymentClient;
         private const int RatePerHour = 300; // (€3/h)
 
-        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IConfiguration configuration)
+        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository)
         {
-            string mollieApiKey = configuration["Mollie:ApiKey"];
-            _paymentRepository = paymentRepository;
-            _spotOccupationRepository = spotOccupationRepository;
-            _molliePaymentClient = new PaymentClient(mollieApiKey);
+            this._paymentRepository = paymentRepository;
+            this._spotOccupationRepository = spotOccupationRepository;
+            this._accountRepository = accountRepository;
+            this._carRepository = carRepository;
+            _molliePaymentClient = new PaymentClient("placeholder");
         }
 
         public async Task<Payment> ProcessPaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
@@ -67,6 +71,14 @@ namespace CORE.Services
             _paymentRepository.Update(payment);
 
             return payment;
+        }
+
+        public List<Payment> GetPaymentsByAuth0Id(string auth0Id)
+        {
+            Account account = this._accountRepository.GetAccountByAuth0Id(auth0Id);
+            List<Car> cars = this._carRepository.GetAllByAccountId(account.Id);
+            List<Payment> payments = this._paymentRepository.GetPaymentsByCarIds(cars.Select(car => car.Id).ToList<int>());
+            return payments;
         }
     }
 }

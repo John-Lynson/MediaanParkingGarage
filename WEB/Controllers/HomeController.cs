@@ -14,11 +14,13 @@ namespace WEB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly RegistrationService _registrationService;
+        private readonly PaymentService _paymentService;
 
         public HomeController(ILogger<HomeController> logger, GarageContext context)
         {
             this._logger = logger;
             this._registrationService = new RegistrationService(new CarRepository(context), new AccountRepository(context));
+            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context));
         }
 
         public IActionResult Index()
@@ -34,7 +36,19 @@ namespace WEB.Controllers
 
         public IActionResult Payment()
         {
-            return View();
+            ViewData["Title"] = "Betalingen";
+
+            string? auth0Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (auth0Id == null)
+            {
+                return this.RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                List<Payment> payments = this._paymentService.GetPaymentsByAuth0Id(auth0Id);
+                return View(payments);
+            }
         }
 
         [Authorize]
@@ -46,7 +60,7 @@ namespace WEB.Controllers
 
             if (auth0Id == null)
             {
-                return RedirectToAction("Login", "Home");
+                return this.RedirectToAction("Login", "Home");
             }
             else
             {

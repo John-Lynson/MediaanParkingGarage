@@ -20,7 +20,7 @@ namespace CORE.Entities
         [Column("cents")]
         public int Price { get; set; }
 
-        [Column("type)")]
+        [Column("type")]
         public PaymentType Type { get; set; }
 
         [Column("payment_datetime")]

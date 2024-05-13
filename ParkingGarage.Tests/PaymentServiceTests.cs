@@ -15,6 +15,8 @@ namespace ParkingGarage.Tests
     {
         private Mock<IPaymentRepository> _mockPaymentRepo;
         private Mock<ISpotOccupationRepository> _mockSpotOccupationRepo;
+        private Mock<IAccountRepository> _mockAccountRepo;
+        private Mock<ICarRepository> _mockCarRepo;
         private PaymentService _paymentService;
         private SpotOccupation _testSpotOccupation;
         private DateTime _entryTime;
@@ -26,6 +28,8 @@ namespace ParkingGarage.Tests
             // Mock setup
             _mockPaymentRepo = new Mock<IPaymentRepository>();
             _mockSpotOccupationRepo = new Mock<ISpotOccupationRepository>();
+            _mockAccountRepo = new Mock<IAccountRepository>();
+            _mockCarRepo = new Mock<ICarRepository>();
 
             // Set up a test SpotOccupation record
             _entryTime = DateTime.Now.AddHours(-3); // 3 hours ago
@@ -45,7 +49,7 @@ namespace ParkingGarage.Tests
             _mockSpotOccupationRepo.Setup(repo => repo.GetLatestByCarId(It.IsAny<int>())).Returns(_testSpotOccupation);
 
             // Initialize the service with the mocked repositories
-            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, fakeMollieApiKey);
+            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, _mockAccountRepo.Object, _mockCarRepo.Object, fakeMollieApiKey);
         }
 
         [TestMethod]
@@ -71,6 +75,12 @@ namespace ParkingGarage.Tests
 
             // Verify that Create method of PaymentRepository was called exactly once
             _mockPaymentRepo.Verify(repo => repo.Create(It.IsAny<Payment>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void GetPaymentsByAuth0Id_ReturnsPayments()
+        {
+            throw new NotImplementedException();
         }
 
     }
