@@ -2,17 +2,56 @@
     ViewData["Title"] = "ePark Home";
 }
 
-<div id="map" style="height: 100%; width: 100%; position: absolute;"></div>
+<div id="map-container">
+    <div id="map"></div>
+</div>
+<div class="reserved-parking">
+    <div class="parking-spot">
+        <h3>Your Reserved Parking Spot</h3>
+        <p><strong>Location:</strong> Eindhoven, 1012 WX, Parking Garage de Dommelaar</p>
+        <p><strong>Spot:</strong> B7</p>
+        <p><strong>Time:</strong> 6:00 PM - 8:00 PM, August 15, 2024</p>
+    </div>
+</div>
+
 
 @section Scripts {
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrvlp8JcSDYNHowsedfr7-fXpCNjcB44Y&callback=initMap" async defer></script>
     <script>
         function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: { lat: 52.370216, lng: 4.895168 }  // Pas dit aan naar je locatie
-            });
-            // Voeg hier markers toe gebaseerd op gereserveerde parkeerplaats data indien nodig
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: pos,
+                        zoom: 15
+                    });
+
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        title: 'Uw locatie'
+                    });
+
+                }, function () {
+                    handleLocationError(true, map, map.getCenter());
+                });
+            } else {
+                // Browser ondersteunt geen Geolocation
+                handleLocationError(false, map, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, map, pos) {
+            var infoWindow = new google.maps.InfoWindow({ map: map });
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Fout: De Geolocatie service is mislukt.' :
+                'Fout: Uw browser ondersteunt geen geolocatie.');
         }
     </script>
 }
