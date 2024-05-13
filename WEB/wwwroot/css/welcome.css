@@ -1,0 +1,56 @@
+﻿/* Base styles for the welcome page */
+.welcome-page, #preloader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Gewijzigd van 'center' naar 'flex-start' */
+    padding-top: 10vh; /* Voegt wat ruimte toe aan de bovenkant */
+    height: 100vh;
+    background-color: #f4f4f4; /* Aanpassen naar je pagina achtergrond kleur */
+}
+
+.welcome-content {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+    .welcome-content h1 {
+        color: #007bff;
+        font-weight: 700;
+    }
+
+    .welcome-content p {
+        font-size: 1.25rem;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 30px; /* Vergroot de marge om meer ruimte onder het logo te creëren */
+}
+
+
+.loading-gif {
+    width: 100px; /* Pas de grootte van je gif aan naar wens */
+    height: 100px;
+}

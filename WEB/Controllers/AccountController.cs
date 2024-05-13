@@ -84,11 +84,16 @@ public class AccountController : Controller
 
     public async Task Logout()
     {
+        // Configureer de redirect URI om gebruikers naar de welkomstpagina te sturen na uitloggen
         var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
-            .WithRedirectUri(Url.Action("Index", "Home"))
+            .WithRedirectUri(Url.Action("Welcome", "Home"))
             .Build();
 
+        // Log de gebruiker uit van Auth0 en de lokale cookie-authenticatie
         await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        // Optioneel: Stuur de gebruiker expliciet naar de welkomstpagina (redundant met bovenstaande als alles correct functioneert)
+        // return RedirectToAction("Welcome", "Home");
     }
 }

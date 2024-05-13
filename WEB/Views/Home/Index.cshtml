@@ -1,11 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "ePark Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to ePark</h1>
-    <p>This page will be used for the main function</a>.</p>
-</div>
+<div id="map" style="height: 100%; width: 100%; position: absolute;"></div>
 
-
-
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: { lat: 52.370216, lng: 4.895168 }  // Pas dit aan naar je locatie
+            });
+            // Voeg hier markers toe gebaseerd op gereserveerde parkeerplaats data indien nodig
+        }
+    </script>
+}

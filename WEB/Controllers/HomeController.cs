@@ -23,6 +23,12 @@ namespace WEB.Controllers
 
         public IActionResult Index()
         {
+
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Welcome", "Home");
+            }
+
             return View();
         }
 
@@ -48,6 +54,16 @@ namespace WEB.Controllers
                 return View(cars);
             }
         }
+
+        public IActionResult Welcome()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
 
         public IActionResult RegisterPlate()
         {

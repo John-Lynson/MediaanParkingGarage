@@ -1,0 +1,170 @@
+/* Basis styling voor de pagina */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+/* Container voor formulieren en lijsten */
+.payment-container, .history-container, .outstanding-payments, .payment-options {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+/* Lijsten en list-items styling */
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    li:hover {
+        background-color: #e2e2e2;
+    }
+
+/* Formulier elementen */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+/* Knoppen styling */
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+/* Specifieke marges en flex instellingen */
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col {
+    flex: 1;
+    padding: 0 10px;
+}
+
+/* Text alignment for payment methods */
+.payment-methods {
+    text-align: center;
+}
+
+.btn-option {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.375rem 0.75rem;
+    margin: 0.375rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+    .btn-option:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+/* Aangepaste stijlen voor de payment-history container */
+.payment-history {
+    background-color: #e9ecef; /* Lichtgrijze achtergrond voor onderscheid */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtielere schaduw */
+    max-width: 600px; /* Een iets breder formaat voor meer ruimte */
+    margin: 30px auto;
+    text-align: left;
+    border-left: 5px solid #007bff; /* Blauwe accentlijn aan de linkerkant */
+}
+
+/* Bijgewerkte lijst- en lijstitemstijlen binnen de history-container */
+ul {
+    list-style-type: disc; /* Voeg schijfvormige lijststijlen toe voor visueel onderscheid */
+    margin-left: 20px; /* Zorg voor ruimte voor de schijfmarkers */
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px dashed #ccc; /* Gestreepte lijn voor een zachtere scheiding */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    li:hover {
+        background-color: #f8f9fa; /* Lichtere hover-kleur voor betere interactiviteit */
+    }
+
+/* Stijlupdates voor knoppen binnen de history container om consistentie te behouden */
+.payment-history .btn-primary {
+    background-color: #17a2b8; /* Gebruik een andere kleur, zoals Bootstrap's 'info' kleur */
+    border-color: #17a2b8;
+}
+
+    .payment-history .btn-primary:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+    }
