@@ -20,8 +20,9 @@ namespace CORE.Services
         private readonly PaymentClient _molliePaymentClient;
         private const int RatePerHour = 300; // (€3/h)
 
-        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, string mollieApiKey)
+        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IConfiguration configuration)
         {
+            string mollieApiKey = configuration["Mollie:ApiKey"];
             _paymentRepository = paymentRepository;
             _spotOccupationRepository = spotOccupationRepository;
             _molliePaymentClient = new PaymentClient(mollieApiKey);
