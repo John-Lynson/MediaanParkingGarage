@@ -20,7 +20,7 @@ namespace WEB.Controllers
         {
             this._logger = logger;
             this._registrationService = new RegistrationService(new CarRepository(context), new AccountRepository(context));
-            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context), ""); //TODO change mollie api key
+            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context));
         }
 
         public IActionResult Index()

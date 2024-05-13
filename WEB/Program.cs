@@ -24,7 +24,6 @@ namespace WEB
             // Register PaymentService
             builder.Services.AddScoped<PaymentService>();
 
-
             // Auth0 configuratie
             builder.Services.AddAuth0WebAppAuthentication(options =>
 			{

@@ -23,13 +23,14 @@ namespace CORE.Services
         private readonly PaymentClient _molliePaymentClient;
         private const int RatePerHour = 300; // (€3/h)
 
-        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository, string mollieApiKey)
+        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository)
         {
+            // string mollieApiKey = configuration["Mollie:ApiKey"];
             this._paymentRepository = paymentRepository;
             this._spotOccupationRepository = spotOccupationRepository;
             this._accountRepository = accountRepository;
             this._carRepository = carRepository;
-            _molliePaymentClient = new PaymentClient(mollieApiKey);
+            // _molliePaymentClient = new PaymentClient(mollieApiKey);
         }
 
         public async Task<Payment> ProcessPaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
