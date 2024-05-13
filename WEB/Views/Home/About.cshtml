@@ -1,8 +1,10 @@
-﻿@{
+﻿@using CORE.Entities;
+@model List<Car>
+
+@{
     ViewData["Title"] = "Account Details";
     var userName = User.Claims.FirstOrDefault(c => c.Type == "name")?.Value;
     var profilePictureUrl = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
-    var licensePlate = ViewData["LicensePlate"] as string ?? "Nog geen license plate toegevoegd.";
 }
 
 <!DOCTYPE html>
@@ -20,7 +22,19 @@
             <p>Username: @userName</p>
         </div>
         <div class="license-plate-box">
-            <p class="license-plate-text">@licensePlate</p>
+            @if (Model.Count > 0)
+            {
+                <ol>
+                    @foreach (Car car in Model)
+                    {
+                        <li>@car.LicensePlate</li>
+                    }
+                </ol>
+            }
+            else
+            {
+                <p class="license-plate-text">No license plates added.</p>
+            }
         </div>
         <button class="offline-button" onclick="confirmOffline()">Go Offline</button>
     </div>
