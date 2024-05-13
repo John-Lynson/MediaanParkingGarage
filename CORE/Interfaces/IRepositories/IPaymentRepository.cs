@@ -9,6 +9,7 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface IPaymentRepository : IRepository<Payment>
     {
-
+        public List<Payment> GetPaymentsByCarIds(List<int> carIds);
+        public List<Payment> GetPaymentsByCarId(int carId);
     }
 }
