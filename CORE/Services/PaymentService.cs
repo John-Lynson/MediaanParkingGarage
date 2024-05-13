@@ -25,12 +25,11 @@ namespace CORE.Services
 
         public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository)
         {
-            // string mollieApiKey = configuration["Mollie:ApiKey"];
             this._paymentRepository = paymentRepository;
             this._spotOccupationRepository = spotOccupationRepository;
             this._accountRepository = accountRepository;
             this._carRepository = carRepository;
-            // _molliePaymentClient = new PaymentClient(mollieApiKey);
+            _molliePaymentClient = new PaymentClient("placeholder");
         }
 
         public async Task<Payment> ProcessPaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
