@@ -18,13 +18,24 @@ namespace WEB
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            /* 
-			builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            // Register repositories
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
             builder.Services.AddScoped<ISpotOccupationRepository, SpotOccupationRepository>();
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddScoped<ICarRepository, CarRepository>();
 
-            // Register PaymentService
-            builder.Services.AddScoped<PaymentService>();
-			*/
+            // Register PaymentService with IConfiguration
+            builder.Services.AddScoped<PaymentService>(provider =>
+            {
+                var paymentRepository = provider.GetRequiredService<IPaymentRepository>();
+                var spotOccupationRepository = provider.GetRequiredService<ISpotOccupationRepository>();
+                var accountRepository = provider.GetRequiredService<IAccountRepository>();
+                var carRepository = provider.GetRequiredService<ICarRepository>();
+                var configuration = provider.GetRequiredService<IConfiguration>();
+
+                return new PaymentService(paymentRepository, spotOccupationRepository, accountRepository, carRepository, configuration);
+            });
+
 
             // Auth0 configuratie
             builder.Services.AddAuth0WebAppAuthentication(options =>

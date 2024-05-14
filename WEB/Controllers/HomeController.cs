@@ -16,11 +16,11 @@ namespace WEB.Controllers
         private readonly RegistrationService _registrationService;
         private readonly PaymentService _paymentService;
 
-        public HomeController(ILogger<HomeController> logger, GarageContext context)
+        public HomeController(ILogger<HomeController> logger, GarageContext context, PaymentService paymentService)
         {
             this._logger = logger;
             this._registrationService = new RegistrationService(new CarRepository(context), new AccountRepository(context));
-            this._paymentService = new PaymentService(new PaymentRepository(context), new SpotOccupationRepository(context), new AccountRepository(context), new CarRepository(context));
+            this._paymentService = paymentService;
         }
 
         public IActionResult Index()
