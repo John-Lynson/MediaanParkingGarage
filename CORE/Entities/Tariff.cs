@@ -14,12 +14,12 @@ namespace CORE.Entities
         public int GarageId {  get; set; }
 
         [Column("cents")]
-        public int PricePerTimeUnit { get; set; }
+        public int Rate { get; set; }
 
         [Column("start_time")]
-        DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Column("end_date")]
-        DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

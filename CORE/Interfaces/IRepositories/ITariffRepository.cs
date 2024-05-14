@@ -9,6 +9,6 @@ namespace CORE.Interfaces.IRepositories
 {
     public interface ITariffRepository : IRepository<Tariff>
     {
-
+        public List<Tariff> GetTariffsByInterval(DateTime startDate, DateTime endDate);
     }
 }

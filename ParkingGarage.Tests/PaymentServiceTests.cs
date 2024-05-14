@@ -49,7 +49,7 @@ namespace ParkingGarage.Tests
             _mockSpotOccupationRepo.Setup(repo => repo.GetLatestByCarId(It.IsAny<int>())).Returns(_testSpotOccupation);
 
             // Initialize the service with the mocked repositories
-            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, _mockAccountRepo.Object, _mockCarRepo.Object, fakeMollieApiKey);
+            _paymentService = new PaymentService(_mockPaymentRepo.Object, _mockSpotOccupationRepo.Object, _mockAccountRepo.Object, _mockCarRepo.Object);
         }
 
         [TestMethod]
