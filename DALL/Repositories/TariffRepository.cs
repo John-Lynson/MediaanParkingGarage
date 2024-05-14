@@ -12,8 +12,8 @@ namespace DALL.Repositories
         {
             return this._dbSet.Where<Tariff>(t =>
                 t.StartDate > startDate && t.EndDate < endDate      // All tariffs between start & end
-                || t.StartDate < startDate && t.EndDate > startDate // The tariff that the startDate lands on.
-                || t.StartDate < endDate && t.EndDate > endDate     // The tariff that the endDate lands on.
+                || t.StartDate <= startDate && t.EndDate > startDate // The tariff that the startDate lands on.
+                || t.StartDate < endDate && t.EndDate >= endDate     // The tariff that the endDate lands on.
                 ).ToList();
         }
     }
