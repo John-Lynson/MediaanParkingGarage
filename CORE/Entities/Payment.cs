@@ -25,5 +25,7 @@ namespace CORE.Entities
 
         [Column("payment_datetime")]
         public DateTime Date { get; set; }
+        [Column("mollie_payment_id")]
+        public string ExternalPaymentId { get; set; }
     }
 }

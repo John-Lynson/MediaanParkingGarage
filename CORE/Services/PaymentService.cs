@@ -23,13 +23,13 @@ namespace CORE.Services
         private readonly PaymentClient _molliePaymentClient;
         private const int RatePerHour = 300; // (€3/h)
 
-        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository)
+        public PaymentService(IPaymentRepository paymentRepository, ISpotOccupationRepository spotOccupationRepository, IAccountRepository accountRepository, ICarRepository carRepository, IConfiguration configuration)
         {
             this._paymentRepository = paymentRepository;
             this._spotOccupationRepository = spotOccupationRepository;
             this._accountRepository = accountRepository;
             this._carRepository = carRepository;
-            _molliePaymentClient = new PaymentClient("placeholder");
+            _molliePaymentClient = new PaymentClient(configuration["Mollie:ApiKey"]);
         }
 
         public async Task<Payment> ProcessPaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
@@ -67,7 +67,7 @@ namespace CORE.Services
             var molliePaymentResponse = await _molliePaymentClient.CreatePaymentAsync(paymentRequest);
 
             // Here you might want to update your payment record with external payment details
-            //payment.ExternalPaymentId = molliePaymentResponse.Id; // Link Mollie payment ID, Add new column for payment
+            payment.ExternalPaymentId = molliePaymentResponse.Id; 
             _paymentRepository.Update(payment);
 
             return payment;
