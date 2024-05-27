@@ -2,7 +2,7 @@
 @model List<Payment>
 
 @{
-    ViewData["Title"] = "Check and Pay Outstanding Payments";
+    ViewData["Title"] = "Your Payments";
 }
 <h1>@ViewData["Title"]</h1>
 
@@ -36,7 +36,9 @@
     </form>
 </div>
 
-<div class="payment-history">
+<button onclick="togglePaymentHistory()" class="btn btn-history">Show Payment History</button>
+
+<div class="payment-history" style="display:none;">
     <h2>Payment History</h2>
     <ul>
         <li>Transaction #1 - €150 - Paid on 2023-01-15</li>
@@ -56,5 +58,17 @@
             document.getElementById(m).style.display = 'none';
         });
         document.getElementById(method).style.display = 'block';
+    }
+
+    function togglePaymentHistory() {
+        var history = document.querySelector('.payment-history');
+        var historyButton = document.querySelector('.btn-history');
+        if (history.style.display === 'none' || history.style.display === '') {
+            history.style.display = 'block';
+            historyButton.textContent = 'Hide Payment History';
+        } else {
+            history.style.display = 'none';
+            historyButton.textContent = 'Show Payment History';
+        }
     }
 </script>

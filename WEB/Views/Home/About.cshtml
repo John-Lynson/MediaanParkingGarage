@@ -19,11 +19,12 @@
         <h1>@ViewData["Title"]</h1>
         <div class="profile-info">
             <img src="@profilePictureUrl" alt="Profile Photo" class="profile-photo2" />
-            <p>Username: @userName</p>
+            <p>User: @userName</p>
         </div>
         <div class="license-plate-box">
             @if (Model.Count > 0)
             {
+                <p>Your license plates</p>
                 <ol>
                     @foreach (Car car in Model)
                     {
@@ -36,12 +37,12 @@
                 <p class="license-plate-text">No license plates added.</p>
             }
         </div>
-        <button class="offline-button" onclick="confirmOffline()">Go Offline</button>
+        <button class="offline-button" onclick="confirmOffline()">Sign out</button>
     </div>
 
     <script>
         function confirmOffline() {
-            if (confirm("Are you sure you want to go offline?")) {
+            if (confirm("Are you sure you want to sign out?")) {
                 window.location.href = '@Url.Action("Logout", "Account")';
             }
         }
