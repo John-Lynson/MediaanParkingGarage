@@ -5,8 +5,10 @@ using DALL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using WEB.Models;
+using static System.Net.WebRequestMethods;
 
 namespace WEB.Controllers
 {
@@ -48,6 +50,24 @@ namespace WEB.Controllers
             {
                 List<Payment> payments = this._paymentService.GetPaymentsByAuth0Id(auth0Id);
                 return View(payments);
+            }
+        }
+
+        public async Task<IActionResult> CreateDemoPayment()
+        {
+            string? auth0Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (auth0Id == null)
+            {
+                return this.RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                List<Car> cars = this._registrationService.GetCarsByAuth0Id(auth0Id);
+                string? redirectUrl = "https://localhost:7159/Home/Payment";
+                await this._paymentService.CreatePaymentAsync(cars.First().Id, 1, DateTime.Now, redirectUrl);
+
+                return Payment();
             }
         }
 

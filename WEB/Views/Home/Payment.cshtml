@@ -7,12 +7,25 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="outstanding-payments">
-    <h2>Outstanding Payments</h2>
+    <h2>Open Payments</h2>
+    @if (this.Model.Count > 0)
+    {
     <ul>
+        @foreach (Payment payment in this.Model)
+        {
+            <li onClick ="showPaymentOptions">@payment.Price</li>
+        }
+        <!--
         <li onclick="showPaymentOptions()">Payment #1 - €100</li>
         <li onclick="showPaymentOptions()">Payment #2 - €250</li>
+        -->
         <!-- More outstanding payments can be added here -->
-    </ul>
+        </ul>
+    }
+    else
+    {
+        <label>No open payments</label>
+    }
 </div>
 
 <div class="payment-options" style="display:none;">
@@ -35,6 +48,9 @@
         <button type="submit" class="btn btn-primary">Pay with iDEAL</button>
     </form>
 </div>
+
+<!--For Demo purposes-->
+<a href="@Url.Action("CreateDemoPayment", "Home")">Create Payment Demo</a>
 
 <button onclick="togglePaymentHistory()" class="btn btn-history">Show Payment History</button>
 

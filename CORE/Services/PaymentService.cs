@@ -32,8 +32,9 @@ namespace CORE.Services
             _molliePaymentClient = new PaymentClient(configuration["Mollie:ApiKey"]);
         }
 
-        public async Task<Payment> ProcessPaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
+        public async Task<Payment> CreatePaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
         {
+            /*
             // Get the latest SpotOccupation record for this car
             var spotOccupation = _spotOccupationRepository.GetLatestByCarId(carId);
 
@@ -42,6 +43,22 @@ namespace CORE.Services
 
             // Calculate total fee in cents
             var totalFee = (int)(parkingDuration * RatePerHour);
+            */
+
+            // for Demo
+            Random random = new Random();
+            decimal totalFee = (decimal)(random.Next(20, 80) * 0.25);
+
+            // Create Mollie payment request
+            var paymentRequest = new PaymentRequest
+            {
+                Amount = new Amount("EUR", totalFee), // Convert cents to euros
+                Description = "Parking fee",
+                RedirectUrl = redirectUrl,
+                Method = PaymentMethod.CreditCard // or any other method you wish to support
+            };
+
+            var molliePaymentResponse = await _molliePaymentClient.CreatePaymentAsync(paymentRequest);
 
             // Create internal payment record
             var payment = new Payment
@@ -50,25 +67,13 @@ namespace CORE.Services
                 GarageId = garageId,
                 Price = totalFee,
                 Type = Enums.PaymentType.Standard,
-                Date = date
+                Date = date,
+                IsPaid = false,
+                MolliePaymentId = molliePaymentResponse.Id,
+                MollieCheckoutUrl = molliePaymentResponse.Links.Checkout.Href,
             };
 
             _paymentRepository.Create(payment);
-
-            // Create Mollie payment request
-            var paymentRequest = new PaymentRequest
-            {
-                Amount = new Amount("EUR", totalFee / 100M), // Convert cents to euros
-                Description = "Parking fee",
-                RedirectUrl = redirectUrl,
-                Method = PaymentMethod.CreditCard // or any other method you wish to support
-            };
-
-            var molliePaymentResponse = await _molliePaymentClient.CreatePaymentAsync(paymentRequest);
-
-            // Here you might want to update your payment record with external payment details
-            payment.ExternalPaymentId = molliePaymentResponse.Id; 
-            _paymentRepository.Update(payment);
 
             return payment;
         }

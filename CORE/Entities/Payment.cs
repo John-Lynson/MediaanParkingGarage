@@ -18,14 +18,22 @@ namespace CORE.Entities
         public int GarageId { get; set; }
 
         [Column("cents")]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         [Column("type")]
         public PaymentType Type { get; set; }
 
         [Column("payment_datetime")]
         public DateTime Date { get; set; }
+
+        [Column("is_paid")]
+        public bool IsPaid { get; set; }
+
         [Column("mollie_payment_id")]
-        public string ExternalPaymentId { get; set; }
+        public string? MolliePaymentId { get; set; }
+
+        [Column("mollie_checkout_url")]
+        public string? MollieCheckoutUrl { get; set; }
+
     }
 }
