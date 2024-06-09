@@ -14,7 +14,7 @@ namespace DALL.Repositories
 
             foreach (int carId in carIds)
             {
-                payments.Concat(this.GetPaymentsByCarId(carId));
+                payments = payments.Union(this.GetPaymentsByCarId(carId)).ToList();
             }
 
             return payments.OrderByDescending(p => p.Date).ToList();

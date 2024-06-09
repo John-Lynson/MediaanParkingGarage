@@ -2,89 +2,106 @@
 @model List<Payment>
 
 @{
-    ViewData["Title"] = "Your Payments";
+	ViewData["Title"] = "Your Payments";
 }
 <h1>@ViewData["Title"]</h1>
+<!--For Demo purposes-->
+<a asp-controller="Home" asp-action="CreateDemoPayment">Create Payment Demo</a>
 
 <div class="outstanding-payments">
-    <h2>Open Payments</h2>
-    @if (this.Model.Count > 0)
-    {
-    <ul>
-        @foreach (Payment payment in this.Model)
-        {
-            <li onClick ="showPaymentOptions">@payment.Price</li>
-        }
-        <!--
-        <li onclick="showPaymentOptions()">Payment #1 - €100</li>
-        <li onclick="showPaymentOptions()">Payment #2 - €250</li>
-        -->
-        <!-- More outstanding payments can be added here -->
-        </ul>
-    }
-    else
-    {
-        <label>No open payments</label>
-    }
+	<h2>Open Payments</h2>
+	@if (this.Model.Where(x => !x.IsPaid).ToList().Count > 0)
+	{
+		<ul>
+			@foreach (Payment payment in this.Model.Where(x => !x.IsPaid).ToList())
+			{
+				<li>
+					<p>€@payment.Price</p>
+					<a href="@payment.MollieCheckoutUrl" class="btn btn-option">Pay with iDEAL</a>
+				</li>
+			}
+			<!--
+			<li onclick="showPaymentOptions()">Payment #1 - €100</li>
+			<li onclick="showPaymentOptions()">Payment #2 - €250</li>
+			-->
+			<!-- More outstanding payments can be added here -->
+		</ul>
+	}
+	else
+	{
+		<label>No open payments</label>
+	}
 </div>
 
 <div class="payment-options" style="display:none;">
-    <button onclick="showPaymentMethod('credit')" class="btn btn-option">Credit Card</button>
-    <button onclick="showPaymentMethod('ideal')" class="btn btn-option">iDEAL</button>
+	<button onclick="showPaymentMethod('credit')" class="btn btn-option">Credit Card</button>
+	<button onclick="showPaymentMethod('ideal')" class="btn btn-option">iDEAL</button>
 </div>
 
 <div id="credit" class="payment-container" style="display:none;">
-    <!-- Credit card payment form -->
-    <form method="post" action="/submit-creditcard">
-        <!-- Form fields for credit card payment -->
-        <button type="submit" class="btn btn-primary">Pay with Credit Card</button>
-    </form>
+	<!-- Credit card payment form -->
+	<form method="post" action="/submit-creditcard">
+		<!-- Form fields for credit card payment -->
+		<button type="submit" class="btn btn-primary">Pay with Credit Card</button>
+	</form>
 </div>
 
 <div id="ideal" class="payment-container" style="display:none;">
-    <!-- iDEAL payment form -->
-    <form method="post" action="/submit-ideal">
-        <!-- Form fields for iDEAL payment -->
-        <button type="submit" class="btn btn-primary">Pay with iDEAL</button>
-    </form>
+	<!-- iDEAL payment form -->
+	<form method="post" action="/submit-ideal">
+		<!-- Form fields for iDEAL payment -->
+		<button type="submit" class="btn btn-primary">Pay with iDEAL</button>
+	</form>
 </div>
-
-<!--For Demo purposes-->
-<a href="@Url.Action("CreateDemoPayment", "Home")">Create Payment Demo</a>
 
 <button onclick="togglePaymentHistory()" class="btn btn-history">Show Payment History</button>
 
 <div class="payment-history" style="display:none;">
-    <h2>Payment History</h2>
-    <ul>
-        <li>Transaction #1 - €150 - Paid on 2023-01-15</li>
-        <li>Transaction #2 - €75 - Paid on 2023-02-20</li>
-        <!-- More payment history items can be added here -->
-    </ul>
+	<h2>Payment History</h2>
+	<ul>
+		@if (this.Model.Where(x => x.IsPaid).ToList().Count > 0)
+		{
+			@foreach (Payment payment in this.Model.Where(x => x.IsPaid).ToList())
+			{
+				<li>
+					<p>€@payment.Price</p>
+				</li>
+			}
+			<!--
+			<li>Transaction #1 - €150 - Paid on 2023-01-15</li>
+			<li>Transaction #2 - €75 - Paid on 2023-02-20</li>
+			-->
+			<!-- More payment history items can be added here -->
+		}
+		else
+		{
+			<label>No payment history</label>
+		}
+	</ul>
 </div>
 
 <script>
-    function showPaymentOptions() {
-        document.querySelector('.payment-options').style.display = 'block';
-    }
+	function showPaymentOptions() {
+		document.querySelector('.payment-options').style.display = 'block';
+	}
 
-    function showPaymentMethod(method) {
-        var methods = ['credit', 'ideal'];
-        methods.forEach(function (m) {
-            document.getElementById(m).style.display = 'none';
-        });
-        document.getElementById(method).style.display = 'block';
-    }
+	function showPaymentMethod(method) {
+		var methods = ['credit', 'ideal'];
+		methods.forEach(function (m) {
+			document.getElementById(m).style.display = 'none';
+		});
+		document.getElementById(method).style.display = 'block';
+	}
 
-    function togglePaymentHistory() {
-        var history = document.querySelector('.payment-history');
-        var historyButton = document.querySelector('.btn-history');
-        if (history.style.display === 'none' || history.style.display === '') {
-            history.style.display = 'block';
-            historyButton.textContent = 'Hide Payment History';
-        } else {
-            history.style.display = 'none';
-            historyButton.textContent = 'Show Payment History';
-        }
-    }
+	function togglePaymentHistory() {
+		var history = document.querySelector('.payment-history');
+		var historyButton = document.querySelector('.btn-history');
+		if (history.style.display === 'none' || history.style.display === '') {
+			history.style.display = 'block';
+			historyButton.textContent = 'Hide Payment History';
+		} else {
+			history.style.display = 'none';
+			historyButton.textContent = 'Show Payment History';
+		}
+	}
 </script>

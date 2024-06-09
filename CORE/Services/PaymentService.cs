@@ -11,6 +11,8 @@ using Mollie.Api.Models;
 using Mollie.Api.Models.Payment;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel;
+using Mollie.Api.Models.Payment.Response;
+using System.Data.SqlTypes;
 
 namespace CORE.Services
 {
@@ -29,7 +31,8 @@ namespace CORE.Services
             this._spotOccupationRepository = spotOccupationRepository;
             this._accountRepository = accountRepository;
             this._carRepository = carRepository;
-            _molliePaymentClient = new PaymentClient(configuration["Mollie:ApiKey"]);
+            this._molliePaymentClient = new PaymentClient(configuration["Mollie:ApiKey"]);
+
         }
 
         public async Task<Payment> CreatePaymentAsync(int carId, int garageId, DateTime date, string redirectUrl)
@@ -55,7 +58,7 @@ namespace CORE.Services
                 Amount = new Amount("EUR", totalFee), // Convert cents to euros
                 Description = "Parking fee",
                 RedirectUrl = redirectUrl,
-                Method = PaymentMethod.CreditCard // or any other method you wish to support
+                Method = PaymentMethod.Ideal // or any other method you wish to support
             };
 
             var molliePaymentResponse = await _molliePaymentClient.CreatePaymentAsync(paymentRequest);
@@ -84,6 +87,23 @@ namespace CORE.Services
             List<Car> cars = this._carRepository.GetAllByAccountId(account.Id);
             List<Payment> payments = this._paymentRepository.GetPaymentsByCarIds(cars.Select(car => car.Id).ToList<int>());
             return payments;
+        }
+
+        public async Task<bool> CheckPaymentsStatus(string auth0Id)
+        {
+            List<Payment> payments = this.GetPaymentsByAuth0Id(auth0Id);
+            
+            foreach (Payment payment in payments)
+            {
+                PaymentResponse response = await this._molliePaymentClient.GetPaymentAsync(payment.MolliePaymentId);
+                if (!payment.IsPaid && response.Status == "paid")
+                {
+                    payment.IsPaid = true;
+                    this._paymentRepository.Update(payment);
+                }
+            }
+
+            return true;
         }
     }
 }

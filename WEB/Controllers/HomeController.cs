@@ -53,6 +53,22 @@ namespace WEB.Controllers
             }
         }
 
+        public async Task<IActionResult> PaymentRedirect()
+        {
+
+			string? auth0Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+			if (auth0Id == null)
+			{
+				return this.RedirectToAction("Login", "Home");
+			}
+			else
+			{
+				await this._paymentService.CheckPaymentsStatus(auth0Id);
+                return RedirectToAction("Payment", "Home");
+			}
+        }
+
         public async Task<IActionResult> CreateDemoPayment()
         {
             string? auth0Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -64,10 +80,10 @@ namespace WEB.Controllers
             else
             {
                 List<Car> cars = this._registrationService.GetCarsByAuth0Id(auth0Id);
-                string? redirectUrl = "https://localhost:7159/Home/Payment";
+                string? redirectUrl = "https://localhost:7159/Home/PaymentRedirect";
                 await this._paymentService.CreatePaymentAsync(cars.First().Id, 1, DateTime.Now, redirectUrl);
 
-                return Payment();
+                return RedirectToAction("Payment", "Home");
             }
         }
 
